@@ -1,0 +1,21 @@
+version: "3"
+services:
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - name=${}value
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"

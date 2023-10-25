@@ -1,9 +1,10 @@
 import { Sequelize } from "sequelize";
-import vchecklist_db from "../config/vehicledb.js";
+import db from "../config/vehicledb.js";
+import User from "./user.model.js";
 
 const { DataTypes } = Sequelize;
 
-const VehicleInspection = vchecklist_db.define('VehicleInspection', {
+const VehicleInspection = db.define('VehicleInspection', {
     vehicleNumber: {
         type: DataTypes.STRING,
         allowNull: false
@@ -25,6 +26,14 @@ const VehicleInspection = vchecklist_db.define('VehicleInspection', {
     personReleasingVehicle: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    userID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id'
+        }
     },
     bodyOfVehicle: DataTypes.BOOLEAN,
     tiresConditionAndAirPressure: DataTypes.BOOLEAN,
@@ -49,7 +58,7 @@ const VehicleInspection = vchecklist_db.define('VehicleInspection', {
 });
 
 (async () => {
-    await vchecklist_db.sync();
+    await db.sync();
 })();
 
 export default VehicleInspection;

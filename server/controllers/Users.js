@@ -1,4 +1,4 @@
-import Users from "../models/UserModel.js";
+import UserService from "../services/user.service";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
  
@@ -15,8 +15,6 @@ export const getUsers = async(req, res) => {
 
 export const Register = async(req, res) => {
     const { name, email, password, confPassword } = req.body;
-    console.log(name, email, password, confPassword )
-
     // Check if passwords match
     if(password !== confPassword) return res.status(400).json({msg: "Password and Confirm Password do not match"});
 
@@ -33,14 +31,14 @@ export const Register = async(req, res) => {
         const userByName = await Users.findOne({where: {name: name }
         });
         if (userByName) {
-            return res.status(400).json({msg: "An account with this username already exists"});
+            return res.status(400).json({msg: "An account with this name already exists"});
         }
 
         // If no existing user found, proceed with registration
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, salt);
 
-        await Users.create({
+        await UserService.createUser({
             name: name,
             email: email,
             password: hashPassword
@@ -56,7 +54,7 @@ export const Register = async(req, res) => {
  
 export const Login = async(req, res) => {
     try {
-        const user = await Users.findAll({
+        const user = await UserService.findAll({
             where:{
                 email: req.body.email
             }
@@ -72,7 +70,7 @@ export const Login = async(req, res) => {
         const refreshToken = jwt.sign({userId, name, email}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        await Users.update({refresh_token: refreshToken},{
+        await UserService.updateToken({refresh_token: refreshToken},{
             where:{
                 id: userId
             }

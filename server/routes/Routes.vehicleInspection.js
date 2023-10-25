@@ -1,5 +1,5 @@
 import express from 'express';
-import VehicleInspection from '../models/VehicleInspection.js';
+import DPWVehicleInspection from '../models/DPWVehicleInspection.js';
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.post('/addInspection', async (req, res) => {
 
     try {
         // Create a new vehicle inspection record
-        const newInspection = await VehicleInspection.create({
+        const newInspection = await DPWVehicleInspection.create({
             vehicleNumber,
             yearMakeModel,
             tag,

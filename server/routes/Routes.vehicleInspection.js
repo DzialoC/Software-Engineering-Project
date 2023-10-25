@@ -1,70 +1,70 @@
-import express from 'express';
-import DPWVehicleInspection from '../models/DPWVehicleInspection.js';
+// import express from 'express';
+// import DPWVehicleInspection from '../models/DPWVehicleInspection.js';
 
-const router = express.Router();
+// const router = express.Router();
 
-// Other routes...
+// // Other routes...
 
-router.post('/addInspection', async (req, res) => {
-    const {
-        vehicleNumber,
-        yearMakeModel,
-        tag,
-        date,
-        mileage,
-        workTicket,
-        personReleasingVehicle,
-        bodyOfVehicle,
-        tiresConditionAndAirPressure,
-        horn,
-        stateInspectionAndLicSticker,
-        wipersReservoir,
-        lowAndHighBeamHeadlights,
-        brakeLights,
-        turnSignalLights,
-        emergencyFlasherLights,
-        vehicleInsuranceCardValid,
-        gasTankFull,
-        emergencyInstructions,
-        washVehicle,
-        comments,
-        dpwSignature
-    } = req.body;
+// router.post('/addInspection', async (req, res) => {
+//     const {
+//         vehicleNumber,
+//         yearMakeModel,
+//         tag,
+//         date,
+//         mileage,
+//         workTicket,
+//         personReleasingVehicle,
+//         bodyOfVehicle,
+//         tiresConditionAndAirPressure,
+//         horn,
+//         stateInspectionAndLicSticker,
+//         wipersReservoir,
+//         lowAndHighBeamHeadlights,
+//         brakeLights,
+//         turnSignalLights,
+//         emergencyFlasherLights,
+//         vehicleInsuranceCardValid,
+//         gasTankFull,
+//         emergencyInstructions,
+//         washVehicle,
+//         comments,
+//         dpwSignature
+//     } = req.body;
 
-    try {
-        // Create a new vehicle inspection record
-        const newInspection = await DPWVehicleInspection.create({
-            vehicleNumber,
-            yearMakeModel,
-            tag,
-            date,
-            mileage,
-            workTicket,
-            personReleasingVehicle,
-            bodyOfVehicle,
-            tiresConditionAndAirPressure,
-            horn,
-            stateInspectionAndLicSticker,
-            wipersReservoir,
-            lowAndHighBeamHeadlights,
-            brakeLights,
-            turnSignalLights,
-            emergencyFlasherLights,
-            vehicleInsuranceCardValid,
-            gasTankFull,
-            emergencyInstructions,
-            washVehicle,
-            comments,
-            dpwSignature
-        });
+//     try {
+//         // Create a new vehicle inspection record
+//         const newInspection = await DPWVehicleInspection.create({
+//             vehicleNumber,
+//             yearMakeModel,
+//             tag,
+//             date,
+//             mileage,
+//             workTicket,
+//             personReleasingVehicle,
+//             bodyOfVehicle,
+//             tiresConditionAndAirPressure,
+//             horn,
+//             stateInspectionAndLicSticker,
+//             wipersReservoir,
+//             lowAndHighBeamHeadlights,
+//             brakeLights,
+//             turnSignalLights,
+//             emergencyFlasherLights,
+//             vehicleInsuranceCardValid,
+//             gasTankFull,
+//             emergencyInstructions,
+//             washVehicle,
+//             comments,
+//             dpwSignature
+//         });
 
-        // Return the created inspection
-        res.status(201).json(newInspection);
+//         // Return the created inspection
+//         res.status(201).json(newInspection);
 
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ msg: "Failed to add inspection" });
-    }
-});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ msg: "Failed to add inspection" });
+//     }
+// });
 
-export default router;
+// export default router;

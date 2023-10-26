@@ -3,9 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const UserService = {
+  // current error with it parsing the inputted data correctly....
+
   // Create a new user
   async createUser({ name, email, password }) {
-    console.log(name, email, password);
+    console.log("Name: ", name, " | email: ", email, " | password: ", password);
     // See if email exists
     const userByEmail = await Users.findOne({ where: { email: email } });
     if (userByEmail) {

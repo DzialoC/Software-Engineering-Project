@@ -1,9 +1,9 @@
-import { DataTypes } from 'sequelize';
-import db from '../config/vehicledb.js';
-import User from './UserModel.js';
-import Vehicle from './Vehicle.js';
+import { DataTypes } from "sequelize";
+import db from "../config/vehicledb.js";
+import User from "./UserModel.js";
+import Vehicle from "./Vehicle.js";
 
-const Maintenance = db.define('Maintenance', {
+const Maintenance = db.define("Maintenance", {
   maintenanceID: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -25,8 +25,8 @@ const Maintenance = db.define('Maintenance', {
     allowNull: false,
     references: {
       model: Vehicle,
-      key: 'vehicleID'
-    }
+      key: "vehicleID",
+    },
   },
 
   userID: {
@@ -34,14 +34,13 @@ const Maintenance = db.define('Maintenance', {
     allowNull: false,
     references: {
       model: User,
-      key: 'id'
-    }
+      key: "id",
+    },
   },
-
 });
 
 (async () => {
-  await db.sync();
+  await db.sync({ alter: true });
 })();
 
 export default Maintenance;

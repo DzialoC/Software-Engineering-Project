@@ -1,145 +1,145 @@
 // see link page 12 https://www.nj.gov/mvc/pdf/license/CDL_Chapter_11.pdf
 
-import { DataTypes } from 'sequelize';
-import db from '../config/vehicledb.js';
-import User from './UserModel.js';
-import Vehicle from './Vehicle.js';
+import { DataTypes } from "sequelize";
+import db from "../config/vehicledb.js";
+import User from "./UserModel.js";
+import Vehicle from "./Vehicle.js";
 
-const ClassBCDL = db.define('ClassBCDL', {
-    vehicleID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Vehicle,
-        key: 'vehicleID'
-      }
+const ClassBCDL = db.define("ClassBCDL", {
+  vehicleID: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Vehicle,
+      key: "vehicleID",
     },
+  },
   userID: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: User,
-      key: 'id'
-    }
+      key: "id",
+    },
   },
   comment: {
     type: DataTypes.TEXT,
-    allowNull: true
+    allowNull: true,
   },
   // In-Vehicle/Engine Start
   airHydraulicBrakeCheck: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   parkingTrailerBrakeCheck: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   serviceBrakeCheck: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   lightingIndicators: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   emergencyEquipment: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   windshieldTrafficMonitoringDevices: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   wipersWashers: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   heaterDefroster: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   horns: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   // Lights Operations Check
   allExternalLights: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   // Front of Vehicle/Engine Area
   lensesFront: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   fluidLevels: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   fluidAirLeaks: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   steeringSystems: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   // Steering Axle
   tires: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   rims: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   lugNuts: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   springsAirBagsShocks: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   brakeLinesHosesLeaks: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   brakeContaminates: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   // Side of Vehicle
   lensesReflectorsSide: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   trafficMonitoringDevicesSide: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   battery: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   fuelTanks: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   frames: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   // Rear of Vehicle
   lensesReflectorsRear: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 (async () => {
-  await db.sync();
+  await db.sync({ alter: true });
 })();
 
 export default ClassBCDL;

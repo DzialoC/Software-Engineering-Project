@@ -4,36 +4,38 @@ import User from "./user.model.js";
 
 const { DataTypes } = Sequelize;
 
-const VehicleInspection = db.define('VehicleInspection', {
+const VehicleInspection = db.define(
+  "VehicleInspection",
+  {
     vehicleNumber: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     yearMakeModel: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     tag: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     date: {
-        type: DataTypes.DATEONLY,
-        allowNull: false
+      type: DataTypes.DATEONLY,
+      allowNull: false,
     },
     mileage: DataTypes.INTEGER,
     workTicket: DataTypes.STRING,
     personReleasingVehicle: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     userID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
     },
     bodyOfVehicle: DataTypes.BOOLEAN,
     tiresConditionAndAirPressure: DataTypes.BOOLEAN,
@@ -50,15 +52,17 @@ const VehicleInspection = db.define('VehicleInspection', {
     washVehicle: DataTypes.BOOLEAN,
     comments: DataTypes.TEXT,
     dpwSignature: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-}, {
-    freezeTableName: true
-});
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    freezeTableName: true,
+  }
+);
 
 (async () => {
-    await db.sync();
+  await db.sync({ alter: true });
 })();
 
 export default VehicleInspection;

@@ -37,7 +37,7 @@ const UserService = {
   },
 
   async login(email, password) {
-    const user = await UserService.findOne({
+    const user = await Users.findOne({
       where: {
         email: email,
       },
@@ -45,6 +45,14 @@ const UserService = {
     if (!user) {
       const error = new Error("Email not found");
       error.status = 404;
+      throw error;
+    }
+    // Check to see if user is an employee to gain access to system
+    if (!user.user) {
+      const error = new Error(
+        "You are not an Employee. If you are please speak to an Administrator."
+      );
+      error.status = 403;
       throw error;
     }
 
@@ -74,7 +82,7 @@ const UserService = {
 
     await this.updateRefreshToken(userId, refreshToken);
 
-    return { accessToken, refreshToken, userId, name, email };
+    return { accessToken, refreshToken };
   },
 
   // Get all users
@@ -132,9 +140,20 @@ const UserService = {
     }
   },
 
-  // sync getAccessToken() {
-
-  // },
+  async isAdmin(id) {
+    try {
+      const admin = await User.findByPk(id);
+      if (admin.admin) {
+        return true;
+      } else {
+        const error = new Error("Forbidden: Not Admin");
+        error.status = 403;
+        throw error;
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
 
   // Update user by ID
   async updateUserById(id, updateData) {

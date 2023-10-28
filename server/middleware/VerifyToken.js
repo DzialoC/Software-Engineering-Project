@@ -5,6 +5,7 @@ import * as userContoller from "../controllers/users.controller.js";
 // TODO: employ refreshToken method through controller then to service
 
 const verifyToken = async (req, res, next) => {
+  console.log("HERE IS NEXT :", next);
   const accessToken = req.cookies.accessToken;
   const refreshToken = req.cookies.refreshToken;
 

@@ -40,7 +40,8 @@ export const Register = async (req, res) => {
 //
 export const Login = async (req, res) => {
   try {
-    console.log("Response Before: ", res);
+    // console.log("Response Before: ", res);
+    // console.log("This is the req : \n", req);
     const { email, password } = req.body;
     const { accessToken, refreshToken } = await UserService.login(
       email,
@@ -53,7 +54,7 @@ export const Login = async (req, res) => {
     });
 
     res.json({ accessToken });
-    console.log("Response: ", res);
+    // console.log("Response: ", res);
   } catch (error) {
     res.status(404).json({ msg: error.message });
   }
@@ -75,6 +76,7 @@ export const Logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
+// needs to be completed
 export const refreshTokens = async (req, res) => {
   const token = req.body;
 };

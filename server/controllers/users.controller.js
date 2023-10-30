@@ -1,17 +1,5 @@
 import UserService from "../services/user.service.js";
 
-export const getUsers = async (req, res) => {
-  try {
-    const users = await Users.findAll({
-      attributes: ["id", "name", "email"],
-    });
-    res.json(users);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// reworked and good
 export const Register = async (req, res) => {
   const { name, email, password, confPassword } = req.body;
   // Check if passwords match
@@ -37,11 +25,8 @@ export const Register = async (req, res) => {
   }
 };
 
-//
 export const Login = async (req, res) => {
   try {
-    // console.log("Response Before: ", res);
-    // console.log("This is the req : \n", req);
     const { email, password } = req.body;
     const { accessToken, refreshToken } = await UserService.login(
       email,
@@ -50,16 +35,23 @@ export const Login = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.json({ accessToken });
-    // console.log("Response: ", res);
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 15,
+    });
+
+    res.json({ message: "Login successful" });
   } catch (error) {
     res.status(404).json({ msg: error.message });
   }
 };
 
+// NEEDS rework to use user.service
 export const Logout = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) return res.sendStatus(204);
@@ -76,7 +68,15 @@ export const Logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
-// needs to be completed
-export const refreshTokens = async (req, res) => {
-  const token = req.body;
+export const GetAllUsers = async (req, res) => {
+  try {
+    const users = await UserService.getAllUsers();
+    if (!users) {
+      return res.sendStatus(204);
+    }
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return res.sendStatus(500);
+  }
 };

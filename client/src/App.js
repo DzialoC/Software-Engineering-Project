@@ -19,6 +19,7 @@ import {
   Dashboard,
   Register,
 } from "./components/index.js";
+import Admin from "./pages/Admin/index.js";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

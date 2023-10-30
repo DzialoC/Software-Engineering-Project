@@ -140,6 +140,49 @@ const UserService = {
     }
   },
 
+  // takes in current token then checks to see if a user exists with token. Throws error if null.
+  // Then creates accessToken, refreshToken. refreshToken is updated in the database and the two
+  // Tokens are returned
+  async refreshTokens(currentToken) {
+    try {
+      const user = await Users.findAll({
+        where: {
+          refresh_token: currentToken,
+        },
+      });
+      // checks if user exists
+      if (!user) {
+        const error = new Error("Invalid Token.");
+        error.status = 403;
+        return error;
+      }
+      const userId = user.id;
+      const name = user.name;
+      const email = user.email;
+      const accessToken = jwt.sign(
+        { userId, name, email },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: "15s",
+        }
+      );
+      // Creates new refresh token
+      const refreshToken = jwt.sign(
+        { userId, name, email },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      // Updates new refresh token to database
+      await this.updateRefreshToken(userId, refreshToken);
+      return { refreshToken, accessToken };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   async isAdmin(id) {
     try {
       const admin = await User.findByPk(id);

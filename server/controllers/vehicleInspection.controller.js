@@ -11,7 +11,7 @@ export const CreateLocalInspection = async(req, res) => {
         console.log(error); //console.log or console.error?
         return res.status(500).json({ msg: "Server error, Please try again."}); //
     }
-}
+};
 
 //Double check if req.body is correct, if not change it.
 export const GetLocalInspectionByID = async(req, res) => {
@@ -26,7 +26,7 @@ export const GetLocalInspectionByID = async(req, res) => {
         console.error("Error fetching Vehicle Inspection:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 //Double check if req.body is correct, if not change it.
 export const GetVehicleInspectionByPage = async(req, res) => {
@@ -41,7 +41,7 @@ export const GetVehicleInspectionByPage = async(req, res) => {
         console.error("Error fetching Vehicle Inspection:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const GetRecentSpecifiedLogs = async(req, res) => {
     const amount = req.body; //change if necessary
@@ -55,7 +55,7 @@ export const GetRecentSpecifiedLogs = async(req, res) => {
         console.error("Error fetching recent vehicle inspections:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const UpdateSpecifiedLog = async(req, res) => {
     const { id, inspectionData } = req.body; //double check
@@ -69,7 +69,7 @@ export const UpdateSpecifiedLog = async(req, res) => {
         console.error("Error updating specified log:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const DeleteSpecifiedLog = async(req, res) => {
     const id = req.body; //double check
@@ -83,5 +83,5 @@ export const DeleteSpecifiedLog = async(req, res) => {
         console.error("Error deleting specified log:", error);
         return res.sendStatus(500);
     }
-}
+};
 

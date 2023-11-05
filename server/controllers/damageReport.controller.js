@@ -11,7 +11,7 @@ export const CreateDamageReport = async(req, res) => {
         console.log(error); //console.log or console.error?
         return res.status(500).json({ msg: "Server error, Please try again."}); //
     }
-}
+};
 
 export const GetDamageReportById = async(req, res) => {
     const id = req.body; //double check this, change if necessary: req.params.id
@@ -22,10 +22,10 @@ export const GetDamageReportById = async(req, res) => {
         }
         return res.status(200).json(report);
     } catch(error){
-        console.error("Error damage report by ID:", error);
+        console.error("Error fetching damage report by ID:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const GetTwentyRecentDamageReport = async(req, res) => {
     try{
@@ -38,7 +38,7 @@ export const GetTwentyRecentDamageReport = async(req, res) => {
         console.error("Error fetching twenty recent damage reports:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const GetDamageReportByPage = async(req, res) => {
     const pageNumber = req.body; //double check
@@ -52,7 +52,7 @@ export const GetDamageReportByPage = async(req, res) => {
         console.error("Error fetching damage report by page:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const GetRecentSpecifiedDamageReports = async(req, res) => {
     const amount = req.body; //double check
@@ -66,7 +66,7 @@ export const GetRecentSpecifiedDamageReports = async(req, res) => {
         console.error("Error fetching recent specified damage reports:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const UpdateDamageReportById = async(req, res) => {
     const { id, updateData } = req.body; //double check
@@ -80,7 +80,7 @@ export const UpdateDamageReportById = async(req, res) => {
         console.error("Error updating damage report by id:", error);
         return res.sendStatus(500);
     }
-}
+};
 
 export const DeleteDamageReport = async(req, res) => {
     const id = req.body; //double check
@@ -94,4 +94,4 @@ export const DeleteDamageReport = async(req, res) => {
         console.error("Error deleting damage report by id:", error);
         return res.sendStatus(500);
     }
-}
+};

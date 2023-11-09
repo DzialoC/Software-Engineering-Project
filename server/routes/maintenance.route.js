@@ -1,38 +1,38 @@
 import express from "express";
 import MaintenanceController from "../controllers/maintenance.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const maintenanceRouter = express.Router();
 
 // Define maintenance routes and apply the token verification middleware
 maintenanceRouter.post(
   "/create",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.createMaintenanceLog
 );
 maintenanceRouter.get(
   "/getbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.getMaintenanceLogById
 );
 maintenanceRouter.get(
   "/page/:page",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.getMaintenanceByPage
 );
 maintenanceRouter.get(
   "/recent/:amount",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.getRecentSpecifiedLogs
 );
 maintenanceRouter.put(
   "/updatebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.updateMaintenanceLog
 );
 maintenanceRouter.delete(
   "/deletebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   MaintenanceController.deleteMaintenanceLog
 );
 

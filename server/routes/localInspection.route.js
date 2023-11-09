@@ -1,39 +1,39 @@
 // localInspection.route.js
 import express from "express";
 import localInspectionController from "../controllers/localInspection.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const localInspectionRouter = express.Router();
 
 // Define local inspection routes and apply the token verification middleware
 localInspectionRouter.post(
   "/create",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.createLocalInspection
 );
 localInspectionRouter.get(
   "/getbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.getLocalInspectionById
 );
 localInspectionRouter.get(
   "/page/:page",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.getLocalInspectionByPage
 );
 localInspectionRouter.get(
   "/recent/:amount",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.getRecentSpecifiedLogs
 );
 localInspectionRouter.put(
   "updatelogbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.updateSpecifiedLog
 );
 localInspectionRouter.delete(
   "deletelogbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   localInspectionController.deleteSpecifiedLog
 );
 

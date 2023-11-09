@@ -77,8 +77,7 @@ class TokenManager {
       const newAccessToken = await UserService.refreshTokens(accessToken);
       if (!newAccessToken) return res.sendStatus(403);
 
-      res.setHeader("Authorization", "Bearer " + newAccessToken);
-
+      return newAccessToken;
       // Send the new access token to the client
       res.json({ message: "Token refreshed" });
     } catch (error) {

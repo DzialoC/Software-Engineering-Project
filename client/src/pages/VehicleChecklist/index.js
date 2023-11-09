@@ -36,7 +36,7 @@ const VehicleChecklist = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/vehicle-inspection",
+        "http://localhost:5000/vehicles/",
         formData
       );
 

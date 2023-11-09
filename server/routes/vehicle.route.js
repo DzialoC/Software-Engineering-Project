@@ -1,33 +1,27 @@
 import express from "express";
 import VehicleController from "../controllers/vehicle.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const vehicleRouter = express.Router();
 
 // Define vehicle routes and apply the token verification middleware
-vehicleRouter.post(
-  "/create",
-  tokenManager.verifyAndRefreshToken,
-  VehicleController.createVehicle
-);
 vehicleRouter.get(
   "/getbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   VehicleController.getVehicleById
 );
-vehicleRouter.get(
-  "/getall",
-  tokenManager.verifyAndRefreshToken,
-  VehicleController.getAllVehicles
-);
+vehicleRouter
+  .route("/")
+  .get(isAuthenticated, VehicleController.getAllVehicles)
+  .post(isAuthenticated, VehicleController.createVehicle);
 vehicleRouter.put(
   "/updatebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   VehicleController.updateVehicleById
 );
 vehicleRouter.delete(
   "/deletebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   VehicleController.deleteVehicleById
 );
 

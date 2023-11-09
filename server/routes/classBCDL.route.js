@@ -1,39 +1,39 @@
 // classBCDL.route.js
 import express from "express";
 import ClassBCDLController from "../controllers/classBCDL.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const classBCDLRouter = express.Router();
 
 // Define classBCDL routes and apply the token verification middleware
 classBCDLRouter.post(
   "/create",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.createClassBCDL
 );
 classBCDLRouter.get(
   "/getbyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.getClassBCDLById
 );
 classBCDLRouter.get(
   "/page/:page",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.getClassCDLByPage
 );
 classBCDLRouter.get(
   "/amount/:amount",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.getRecentAmountClassBForms
 );
 classBCDLRouter.put(
   "/updatebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.updateSpecified
 );
 classBCDLRouter.delete(
   "/deletebyid/:id",
-  tokenManager.verifyAndRefreshToken,
+  isAuthenticated,
   ClassBCDLController.deleteClassBForm
 );
 

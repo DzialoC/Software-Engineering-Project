@@ -6,12 +6,12 @@ import {
   Login,
   Logout,
 } from "../controllers/users.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const userRouter = express.Router();
 
 // User routes
-userRouter.get("/", tokenManager.verifyAndRefreshToken, GetAllUsers); // Protected route to get all users
+userRouter.get("/", isAuthenticated, GetAllUsers); // Protected route to get all users
 userRouter.post("/register", Register); // Public route for user registration
 userRouter.post("/login", Login); // Public route for user login
 userRouter.delete("/logout", Logout); // Public route for user logout

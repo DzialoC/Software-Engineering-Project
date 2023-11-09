@@ -33,7 +33,7 @@ const Users = db.define(
 );
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default Users;

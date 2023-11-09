@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import db from "../config/vehicledb.js";
-import User from "./UserModel.js";
-import Vehicle from "./Vehicle.js";
+import db from "../config/Database.js";
+import User from "./user.model.js";
+import Vehicle from "./vehicle.model.js";
 
 const Maintenance = db.define("Maintenance", {
   maintenanceID: {
@@ -40,7 +40,7 @@ const Maintenance = db.define("Maintenance", {
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default Maintenance;

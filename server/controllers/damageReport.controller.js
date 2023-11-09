@@ -38,7 +38,7 @@ const DamageReportController = {
 
   async getDamageReportByPage(req, res) {
     try {
-      const pageNumber = parseInt(req.params.page);
+      const pageNumber = parseInt(req.params.pageNumber);
       const reports = await DamageReportService.getDamageReportByPage(
         pageNumber
       );

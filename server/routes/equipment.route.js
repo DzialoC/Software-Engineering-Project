@@ -1,39 +1,40 @@
 // equipment.route.js
 import express from "express";
-import {
-  createEquipment,
-  getEquipmentById,
-  getAllEquipment,
-  getEquipmentByPage,
-  updateEquipment,
-  deleteEquipment,
-} from "../controllers/equipment.controller.js";
+import EquipmentController from "../controllers/equipment.controller.js";
 import tokenManager from "../middleware/TokenManager.js";
 
 const equipmentRouter = express.Router();
 
 // Define equipment routes and apply the token verification middleware
-equipmentRouter.post("/", tokenManager.verifyAndRefreshToken, createEquipment);
-equipmentRouter.get(
-  "/:id",
+equipmentRouter.post(
+  "/create",
   tokenManager.verifyAndRefreshToken,
-  getEquipmentById
+  EquipmentController.createEquipment
 );
-equipmentRouter.get("/", tokenManager.verifyAndRefreshToken, getAllEquipment);
+equipmentRouter.get(
+  "/getbyid/:id",
+  tokenManager.verifyAndRefreshToken,
+  EquipmentController.getEquipmentById
+);
+equipmentRouter.get(
+  "/getallequipment/",
+  tokenManager.verifyAndRefreshToken,
+  EquipmentController.getAllEquipment
+);
 equipmentRouter.get(
   "/page/:page",
   tokenManager.verifyAndRefreshToken,
-  getEquipmentByPage
+  EquipmentController.getEquipmentByPage
 );
 equipmentRouter.put(
-  "/:id",
+  "/updateequipment/:id",
   tokenManager.verifyAndRefreshToken,
-  updateEquipment
+  EquipmentController.updateEquipment
 );
 equipmentRouter.delete(
-  "/:id",
+  "/deletebyid/:id",
   tokenManager.verifyAndRefreshToken,
-  deleteEquipment
+  EquipmentController.deleteEquipment
 );
 
 export default equipmentRouter;

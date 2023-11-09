@@ -1,41 +1,35 @@
 // damageReport.route.js
 import express from "express";
-import {
-  CreateDamageReport,
-  GetAllDamageReports,
-  GetDamageReport,
-  UpdateDamageReport,
-  DeleteDamageReport,
-} from "../controllers/damageReport.controller.js";
+import DamageReportController from "../controllers/damageReport.controller.js";
 import tokenManager from "../middleware/TokenManager.js";
 
 const damageReportRouter = express.Router();
 
 // Define damage report routes and apply the token verification middleware
 damageReportRouter.post(
-  "/",
+  "/create",
   tokenManager.verifyAndRefreshToken,
-  CreateDamageReport
+  DamageReportController.createDamageReport
 );
 damageReportRouter.get(
-  "/",
+  "/page/:pageNumber",
   tokenManager.verifyAndRefreshToken,
-  GetAllDamageReports
+  DamageReportController.getDamageReportByPage
 );
 damageReportRouter.get(
-  "/:id",
+  "/getreportbyid/:id",
   tokenManager.verifyAndRefreshToken,
-  GetDamageReport
+  DamageReportController.getDamageReportById
 );
 damageReportRouter.put(
-  "/:id",
+  "/updatereportbyid/:id",
   tokenManager.verifyAndRefreshToken,
-  UpdateDamageReport
+  DamageReportController.updateDamageReportById
 );
 damageReportRouter.delete(
-  "/:id",
+  "/deletereportbyid/:id",
   tokenManager.verifyAndRefreshToken,
-  DeleteDamageReport
+  DamageReportController.deleteDamageReport
 );
 
 export default damageReportRouter;

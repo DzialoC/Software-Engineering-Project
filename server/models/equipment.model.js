@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../config/Database.js";
-import User from "./UserModel.js";
+import User from "./user.model.js";
 
 const Equipment = db.define("Equipment", {
   equipmentID: {
@@ -20,13 +20,13 @@ const Equipment = db.define("Equipment", {
     allowNull: false,
     references: {
       model: User,
-      key: "userID",
+      key: "id",
     },
   },
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default Equipment;

@@ -1,9 +1,9 @@
 // see link page 12 https://www.nj.gov/mvc/pdf/license/CDL_Chapter_11.pdf
 
 import { DataTypes } from "sequelize";
-import db from "../config/vehicledb.js";
-import User from "./UserModel.js";
-import Vehicle from "./Vehicle.js";
+import db from "../config/Database.js";
+import User from "./user.model.js";
+import Vehicle from "./vehicle.model.js";
 
 const ClassBCDL = db.define("ClassBCDL", {
   vehicleID: {
@@ -139,7 +139,7 @@ const ClassBCDL = db.define("ClassBCDL", {
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default ClassBCDL;

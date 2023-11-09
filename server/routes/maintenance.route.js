@@ -1,46 +1,39 @@
 import express from "express";
-import {
-  createMaintenanceLog,
-  getMaintenanceLogById,
-  getMaintenanceByPage,
-  getRecentSpecifiedLogs,
-  updateMaintenanceLog,
-  deleteMaintenanceLog,
-} from "../controllers/maintenance.controller.js";
+import MaintenanceController from "../controllers/maintenance.controller.js";
 import tokenManager from "../middleware/TokenManager.js";
 
 const maintenanceRouter = express.Router();
 
 // Define maintenance routes and apply the token verification middleware
 maintenanceRouter.post(
-  "/",
+  "/create",
   tokenManager.verifyAndRefreshToken,
-  createMaintenanceLog
+  MaintenanceController.createMaintenanceLog
 );
 maintenanceRouter.get(
-  "/:id",
+  "/getbyid/:id",
   tokenManager.verifyAndRefreshToken,
-  getMaintenanceLogById
+  MaintenanceController.getMaintenanceLogById
 );
 maintenanceRouter.get(
   "/page/:page",
   tokenManager.verifyAndRefreshToken,
-  getMaintenanceByPage
+  MaintenanceController.getMaintenanceByPage
 );
 maintenanceRouter.get(
   "/recent/:amount",
   tokenManager.verifyAndRefreshToken,
-  getRecentSpecifiedLogs
+  MaintenanceController.getRecentSpecifiedLogs
 );
 maintenanceRouter.put(
-  "/:id",
+  "/updatebyid/:id",
   tokenManager.verifyAndRefreshToken,
-  updateMaintenanceLog
+  MaintenanceController.updateMaintenanceLog
 );
 maintenanceRouter.delete(
-  "/:id",
+  "/deletebyid/:id",
   tokenManager.verifyAndRefreshToken,
-  deleteMaintenanceLog
+  MaintenanceController.deleteMaintenanceLog
 );
 
 export default maintenanceRouter;

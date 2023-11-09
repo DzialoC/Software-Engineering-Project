@@ -24,13 +24,13 @@ const Vehicle = db.define("Vehicle", {
     allowNull: true,
     references: {
       model: User,
-      key: "userID",
+      key: "id",
     },
   },
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default Vehicle;

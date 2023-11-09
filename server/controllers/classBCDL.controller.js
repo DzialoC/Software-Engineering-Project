@@ -39,7 +39,7 @@ const ClassBCDLController = {
     }
   },
 
-  async getRecentSpecifiedClassBForms(req, res) {
+  async getRecentAmountClassBForms(req, res) {
     try {
       const amount = parseInt(req.params.amount);
       const recentClassBCDLForms =

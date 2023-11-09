@@ -1,11 +1,11 @@
 import { Sequelize } from "sequelize";
-import db from "../config/vehicledb.js";
+import db from "../config/Database.js";
 import User from "./user.model.js";
 
 const { DataTypes } = Sequelize;
 
-const VehicleInspection = db.define(
-  "VehicleInspection",
+const LocalVehicleInspection = db.define(
+  "LocalVehicleInspection",
   {
     vehicleNumber: {
       type: DataTypes.STRING,
@@ -62,7 +62,7 @@ const VehicleInspection = db.define(
 );
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
-export default VehicleInspection;
+export default LocalVehicleInspection;

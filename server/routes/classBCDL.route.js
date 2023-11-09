@@ -1,43 +1,40 @@
 // classBCDL.route.js
 import express from "express";
-import {
-  createClassBCDL,
-  getClassBCDLById,
-  getClassCDLByPage,
-  getRecentSpecifiedClassBForms,
-  updateSpecified,
-  deleteClassBForm,
-} from "../controllers/classBCDL.controller.js";
+import ClassBCDLController from "../controllers/classBCDL.controller.js";
 import tokenManager from "../middleware/TokenManager.js";
 
 const classBCDLRouter = express.Router();
 
 // Define classBCDL routes and apply the token verification middleware
-classBCDLRouter.post("/", tokenManager.verifyAndRefreshToken, createClassBCDL);
-classBCDLRouter.get(
-  "/:id",
+classBCDLRouter.post(
+  "/create",
   tokenManager.verifyAndRefreshToken,
-  getClassBCDLById
+  ClassBCDLController.createClassBCDL
+);
+classBCDLRouter.get(
+  "/getbyid/:id",
+  tokenManager.verifyAndRefreshToken,
+  ClassBCDLController.getClassBCDLById
 );
 classBCDLRouter.get(
   "/page/:page",
   tokenManager.verifyAndRefreshToken,
-  getClassCDLByPage
+  ClassBCDLController.getClassCDLByPage
 );
 classBCDLRouter.get(
-  "/recent",
+  "/amount/:amount",
   tokenManager.verifyAndRefreshToken,
-  getRecentSpecifiedClassBForms
+  ClassBCDLController.getRecentAmountClassBForms
 );
 classBCDLRouter.put(
-  "/:id",
+  "/updatebyid/:id",
   tokenManager.verifyAndRefreshToken,
-  updateSpecified
+  ClassBCDLController.updateSpecified
 );
 classBCDLRouter.delete(
-  "/:id",
+  "/deletebyid/:id",
   tokenManager.verifyAndRefreshToken,
-  deleteClassBForm
+  ClassBCDLController.deleteClassBForm
 );
 
 export default classBCDLRouter;

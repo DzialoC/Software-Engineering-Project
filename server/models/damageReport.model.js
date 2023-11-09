@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
-import db from "../config/vehicledb.js";
-import User from "./UserModel.js";
-import Vehicle from "./Vehicle.js";
-import Equipment from "./Equipment";
+import db from "../config/Database.js";
+import User from "./user.model.js";
+import Vehicle from "./vehicle.model.js";
+import Equipment from "./equipment.model.js";
 
 const DamageReport = db.define("DamageReport", {
   reportID: {
@@ -60,7 +60,7 @@ const DamageReport = db.define("DamageReport", {
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default DamageReport;

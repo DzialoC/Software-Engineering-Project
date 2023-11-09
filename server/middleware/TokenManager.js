@@ -16,15 +16,21 @@ class TokenManager {
   }
 
   async verifyToken(req, res, next) {
-    const accessToken = req.cookies.accessToken;
-    const refreshToken = req.cookies.refreshToken;
+    console.log(req.headers);
+    const authHeader = req.headers.authorization;
 
-    if (!accessToken && !refreshToken) {
-      return res.status(401).json({ message: "No token provided" });
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token provided 1" });
+    }
+
+    const accessToken = authHeader && authHeader.split(" ")[1];
+
+    if (!accessToken) {
+      return res.status(401).json({ message: "No token provided 2" });
     }
 
     // Ensure tokens are properly formatted JWTs
-    if (!isJWT(accessToken) || !isJWT(refreshToken)) {
+    if (!this.isJWT(accessToken)) {
       return res.status(401).json({ message: "Invalid token format" });
     }
 
@@ -37,7 +43,7 @@ class TokenManager {
       if (error.name === "TokenExpiredError") {
         // Access token has expired, try to refresh it using the refresh token
         try {
-          const newTokens = await refreshTokens(refreshToken);
+          const newTokens = await UserService.refreshTokens(refreshToken);
           res.cookie("accessToken", newTokens.accessToken, {
             httpOnly: true,
             secure: true,
@@ -62,19 +68,19 @@ class TokenManager {
 
   async refreshToken(req, res) {
     try {
-      const refreshToken = req.cookies.refreshToken;
-      if (!refreshToken) return res.sendStatus(401);
-      // Token consist of {refreshToken, accessToken}
-      const tokens = await UserService.refreshTokens(refreshToken);
-      if (!tokens) return res.sendStatus(403);
+      const authHeader = req.headers.authorization;
 
-      // Set the new fresh token as a cookie
-      res.cookie("refreshToken", tokens.refreshToken, {
-        httpOnly: true,
-      });
+      if (!authHeader) return res.sendStatus(401);
+
+      const accessToken = authHeader && authHeader.split(" ")[1];
+      // Token consist of {refreshToken, accessToken}
+      const newAccessToken = await UserService.refreshTokens(accessToken);
+      if (!newAccessToken) return res.sendStatus(403);
+
+      res.setHeader("Authorization", "Bearer " + newAccessToken);
 
       // Send the new access token to the client
-      res.json({ accessToken: tokens.accessToken });
+      res.json({ message: "Token refreshed" });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

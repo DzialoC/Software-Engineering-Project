@@ -1,73 +1,59 @@
-import LocalInspection from '../models/localInspection.model.js';
+import LocalInspection from "../models/localInspection.model.js";
 
 const LocalInspectionService = {
-
-    async createLocalInspection(inspectionData) {
-        try {
-            const inspectionLog = await LocalInspection.create(inspectionData);
-            return inspectionLog;
-        } catch(error) {
-            throw error;
-        }
-    },
-
-    async getLocalInspectionById(id) {
-        try {
-            const inspectionLog = await LocalInspection.findByPk(id);
-            return inspectionLog;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getLocalInspectionByPage(pageNumber) {
-        const limit = 20;
-        const offset = (pageNumber - 1) * limit;
-        try {
-            const inspectionLogs = await DamageReport.findAll({
-                order: [['createdAt' , 'DESC']],
-                limit: limit,
-                offset: offset
-            });
-            return inspectionLogs;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getRecentSpecifiedLogs(amount) {
-        try {
-            const recentInspections = await LocalInspection.findAll({
-                order: [['createdAt' , 'DESC']],
-                Limit: amount
-            });
-            return recentInspections;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async updateSpecifiedLog(id, inspectionData) {
-        try {
-            await LocalInspection.update(inspectionData, { where: { id: id }});
-            return await this.getLocalInspectionById(id);
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async deleteSpecifiedLog(id) {
-        try {
-            const log = await this.getLocalInspectionById(id);
-            if(log) {
-                await log.destroy();
-                return true;
-            }
-            return false;
-        } catch(error) {
-            throw error;
-        }
+  async createLocalInspection(inspectionData) {
+    const inspectionLog = await LocalInspection.create(inspectionData);
+    if (!inspectionLog) {
+      throw new Error("Inspection Log could not be created");
     }
-}
+    return inspectionLog;
+  },
+
+  async getLocalInspectionById(id) {
+    const inspectionLog = await LocalInspection.findByPk(id);
+    if (!inspectionLog) {
+      throw new Error("Inspection Log not found");
+    }
+    return inspectionLog;
+  },
+
+  async getLocalInspectionByPage(pageNumber) {
+    const limit = 20;
+    const offset = (pageNumber - 1) * limit;
+    const inspectionLogs = await LocalInspection.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: limit,
+      offset: offset,
+    });
+    return inspectionLogs;
+  },
+
+  async getRecentSpecifiedLogs(amount) {
+    const recentInspections = await LocalInspection.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: amount,
+    });
+    return recentInspections;
+  },
+
+  async updateSpecifiedLog(id, inspectionData) {
+    const [updated] = await LocalInspection.update(inspectionData, {
+      where: { id: id },
+    });
+    if (!updated) {
+      throw new Error("Inspection Log not found for update");
+    }
+    return await this.getLocalInspectionById(id); // Fetch the updated log
+  },
+
+  async deleteSpecifiedLog(id) {
+    const log = await this.getLocalInspectionById(id);
+    if (!log) {
+      throw new Error("Inspection Log not found for deletion");
+    }
+    await log.destroy();
+    return { message: "Inspection Log deleted successfully" };
+  },
+};
 
 export default LocalInspectionService;

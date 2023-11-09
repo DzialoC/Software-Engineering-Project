@@ -1,23 +1,19 @@
 // user.route.js
 import express from "express";
 import {
-  getUsers,
+  GetAllUsers,
   Register,
   Login,
   Logout,
 } from "../controllers/users.controller.js";
 import tokenManager from "../middleware/TokenManager.js";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-// get
-router.get("/getusers", tokenManager.verifyAndRefreshToken, getUsers);
+// User routes
+userRouter.get("/", tokenManager.verifyAndRefreshToken, GetAllUsers); // Protected route to get all users
+userRouter.post("/register", Register); // Public route for user registration
+userRouter.post("/login", Login); // Public route for user login
+userRouter.delete("/logout", Logout); // Public route for user logout
 
-// post
-router.post("/users", Register);
-router.post("/login", Login);
-
-// Delete
-router.delete("/logout", Logout);
-
-export default router;
+export default userRouter;

@@ -1,17 +1,21 @@
 import express from "express";
-import {
-  GetAllUsers,
-  Register,
-  Login,
-  Logout,
-} from "../controllers/users.controller.js";
-import tokenManager from "../middleware/TokenManager.js";
+import userRoutes from "./user.route.js";
+import damageReportRoutes from "./damageReport.route.js";
+import classBCDLRoutes from "./classBCDL.route.js";
+import equipmentRoutes from "./equipment.route.js";
+import localInspectionRoutes from "./localInspection.route.js";
+import maintenanceRoutes from "./maintenance.route.js";
+import vehicleRoutes from "./vehicle.route.js"; // Import the vehicle routes
 
 const router = express.Router();
 
-router.get("/users", tokenManager.verifyAndRefreshToken, GetAllUsers); // Protected route to get all users
-router.post("/users", Register);
-router.post("/login", Login);
-router.delete("/logout", Logout);
+// Use the routes for different parts of the application
+router.use("/users", userRoutes);
+router.use("/damage-reports", damageReportRoutes);
+router.use("/class-bcdl", classBCDLRoutes);
+router.use("/equipment", equipmentRoutes);
+router.use("/local-inspections", localInspectionRoutes);
+router.use("/maintenance-logs", maintenanceRoutes);
+router.use("/vehicles", vehicleRoutes); // Mount the vehicle routes on the '/vehicles' path
 
 export default router;

@@ -28,43 +28,22 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { accessToken, refreshToken } = await UserService.login(
-      email,
-      password
-    );
+    const { accessToken } = await UserService.login(email, password);
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 15,
-    });
-
+    // Set the access token in the Authorization header
+    res.setHeader("Authorization", "Bearer " + accessToken);
+    console.log(accessToken);
     res.json({ message: "Login successful" });
   } catch (error) {
     res.status(404).json({ msg: error.message });
   }
 };
 
-// NEEDS rework to use user.service
 export const Logout = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) return res.sendStatus(204);
+  const accessToken = req.cookies.accessToken;
+  if (!accessToken) return res.sendStatus(204);
 
-  const user = await Users.findAll({
-    where: {
-      refresh_token: refreshToken,
-    },
-  });
-  if (!user[0]) return res.sendStatus(204);
-  const userId = user[0].id;
-  await UserService.updateRefreshToken(userId, refreshToken);
-  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken");
   return res.sendStatus(200);
 };
 

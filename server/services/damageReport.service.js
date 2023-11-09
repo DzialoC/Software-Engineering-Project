@@ -1,84 +1,67 @@
-import DamageReport from '../models/damageReport.model.js';
+import DamageReport from "../models/damageReport.model.js";
 
 const DamageReportService = {
-
-    async createDamageReport(damageData) {
-        try{
-            const damageReport = DamageReport.create(damageData);
-            return damageReport;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getDamageReportById(id) {
-        try {
-            const report = await DamageReport.findByPk(id);
-            return report;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getTwentyRecentDamageReport() {
-        try {
-            const reports = await DamageReport.findAll({
-                order: [['createdAt' , 'DESC']],
-                limit: 20
-            });
-            return reports;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getDamageReportByPage(pageNumber) {
-        const limit = 20;
-        const offset = (pageNumber - 1) * limit;
-        try {
-            const reports = await DamageReport.findAll({
-                order: [['createdAt' , 'DESC']],
-                limit: limit,
-                offset: offset
-            });
-            return reports;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async getRecentSpecifiedDamageReports(amount) {
-        try {
-            const recentLogs = await findAll({
-                order: [['createdAt' , 'DES']],
-                limit: amount
-            });
-            return recentLogs;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    async updateDamageReportById(id, updateData) {
-        try {
-            await DamageReport.update(updateData, { where: { id: id }});
-            return await this.getDamageReportById(id);
-        } catch(error) {
-            throw error;
-        }
-    },
-
-    async deleteDamageReport(id) {
-        try {
-            const report = await this.getDamageReportById(id);
-            if(report) {
-                await report.destroy();
-                return true;
-            }
-            return false;
-        } catch (error) {
-            throw error;
-        }
+  async createDamageReport(damageData) {
+    const damageReport = await DamageReport.create(damageData);
+    if (!damageReport) {
+      throw new Error("Damage Report could not be created");
     }
-}
+    return damageReport;
+  },
+
+  async getDamageReportById(id) {
+    const report = await DamageReport.findByPk(id);
+    if (!report) {
+      throw new Error("Damage Report not found");
+    }
+    return report;
+  },
+
+  async getTwentyRecentDamageReport() {
+    const reports = await DamageReport.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: 20,
+    });
+    return reports;
+  },
+
+  async getDamageReportByPage(pageNumber) {
+    const limit = 20;
+    const offset = (pageNumber - 1) * limit;
+    const reports = await DamageReport.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: limit,
+      offset: offset,
+    });
+    return reports;
+  },
+
+  async getRecentSpecifiedDamageReports(amount) {
+    const recentLogs = await DamageReport.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: amount,
+    });
+    return recentLogs;
+  },
+
+  async updateDamageReportById(id, updateData) {
+    const [updated] = await DamageReport.update(updateData, {
+      where: { id: id },
+    });
+    if (!updated) {
+      throw new Error("Damage Report not found for update");
+    }
+    return await this.getDamageReportById(id); // Fetch the updated report
+  },
+
+  async deleteDamageReport(id) {
+    const report = await this.getDamageReportById(id);
+    if (!report) {
+      throw new Error("Damage Report not found for deletion");
+    }
+    await report.destroy();
+    return { message: "Damage Report deleted successfully" };
+  },
+};
+
 export default DamageReportService;

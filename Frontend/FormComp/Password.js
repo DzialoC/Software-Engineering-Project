@@ -1,4 +1,5 @@
 import React from 'react';
+import './Password.css'
 
 function PasswordInput({ label, placeholder, value, onChange }) {
   return (

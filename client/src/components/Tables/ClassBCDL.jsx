@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from "react";
 
-function InspectionFormSubmissions() {
-  const [submissions, setSubmissions] = useState([]);
+function LatestReports() {
+  const [reports, setReports] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchReports() {
       try {
-        const response = await fetch("http://localhost:5000/class-bcdl/");
+        const response = await fetch("http://localhost:5000/latest-reports");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setSubmissions(data);
+        setReports(data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
-    };
+    }
 
-    fetchData();
+    fetchReports();
   }, []);
 
-  // Render submissions in a table or list
   return (
     <div>
-      <h2>Form Submissions</h2>
+      <h2>Latest Reports</h2>
       <table>
         <thead>
           <tr>
+            <th>Report ID</th>
             <th>Vehicle ID</th>
             <th>User ID</th>
-            {/* Add other table headers as needed */}
+            {/* Add other relevant headers */}
           </tr>
         </thead>
         <tbody>
-          {submissions.map((submission, index) => (
-            <tr key={index}>
-              <td>{submission.vehicleID}</td>
-              <td>{submission.userID}</td>
-              {/* Render other submission fields as needed */}
+          {reports.map((report) => (
+            <tr key={report.id}>
+              <td>{report.id}</td>
+              <td>{report.vehicleID}</td>
+              <td>{report.userID}</td>
+              {/* Display other report fields as needed */}
             </tr>
           ))}
         </tbody>
@@ -46,4 +47,4 @@ function InspectionFormSubmissions() {
   );
 }
 
-export default InspectionFormSubmissions;
+export default LatestReports;

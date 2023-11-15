@@ -17,7 +17,7 @@ const Sidebar = ({ onMenuClick }) => {
       </CollapsibleMenu>
       <CollapsibleMenu title="Overview" onMenuClick={onMenuClick}>
         <div onClick={() => onMenuClick("LocalInsepctionTable")}>
-          - Vehicles
+          - Local Insepctions
         </div>
         <div onClick={() => onMenuClick("VehicleTable")}>- Vehicles</div>
         <div onClick={() => onMenuClick("EquipmentTable")}>- Equipment</div>

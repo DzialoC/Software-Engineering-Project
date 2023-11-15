@@ -3,9 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [msg, setMsg] = useState();
   const history = useNavigate();
 
   const Auth = async (e) => {
@@ -21,10 +21,6 @@ const Login = () => {
       ); // Ensure withCredentials is true to send cookies
 
       if (response.data.message === "Login successful") {
-        // Set the Authorization header for future requests
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.accessToken}`;
         history("/VehicleChecklist");
       } else {
         // Handle cases where there might be a response but no access token

@@ -28,14 +28,30 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { accessToken } = await UserService.login(email, password);
-    console.log("Login ", accessToken);
-    // Set the access token in the Authorization header
-    res.header("Authorization", "Bearer " + accessToken);
-    console.log(res.header);
-    res.json({ message: "Login successful" });
+    const { accessToken, refreshToken } = await UserService.login(
+      email,
+      password
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false, // Use secure cookies in production
+      sameSite: "Strict", // Helps against CSRF attacks
+      maxAge: 24 * 60 * 60 * 1000, // 1D
+    });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Strict",
+      maxAge: 60 * 60 * 1000, // 1h
+    });
+
+    res.send({
+      message: "Login successful",
+    });
   } catch (error) {
-    res.status(404).json({ msg: error.message });
+    res.status(error.status || 500).json({ msg: error.message });
   }
 };
 
@@ -43,16 +59,21 @@ export const Logout = async (req, res) => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) return res.sendStatus(204);
 
-  res.clearCookie("accessToken");
+  res.cookie("refreshToken", "", {
+    maxAge: 0,
+    httpOnly: true,
+  });
+  res.cookie("accessToken", "", {
+    maxAge: 0,
+    httpOnly: true,
+  });
+  // res.clearCookie("accessToken");
   return res.sendStatus(200);
 };
 
 export const GetAllUsers = async (req, res) => {
   try {
     const users = await UserService.getAllUsers();
-    if (!users) {
-      return res.sendStatus(204);
-    }
     return res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);

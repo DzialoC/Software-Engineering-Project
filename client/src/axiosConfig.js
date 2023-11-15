@@ -13,36 +13,43 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor to refresh the token when it expires
 axiosInstance.interceptors.response.use(
   (response) => {
-    response.headers.getAuthorization();
+    // Return the response as is if everything is OK
     return response;
   },
   async (error) => {
     const originalRequest = error.config;
 
-    // Check if error response status is 401 Unauthorized
+    // Check if the status code indicates that the token has expired
     if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true; // mark it so that we don't try to refresh the token again
 
       try {
-        // Attempt to refresh the access token
-        const response = await axiosInstance.post("/refresh-token");
+        // Send a request to the refresh endpoint to get a new access token
+        const refreshToken = localStorage.getItem("refreshToken");
+        const response = await axiosInstance.post("/refresh", { refreshToken });
 
-        // Update the access token in the original request headers
-        originalRequest.headers[
-          "Authorization"
-        ] = `Bearer ${response.data.accessToken}`;
+        // Store the new access token and the refresh token (if returned) in local storage
+        const newAccessToken = response.data.accessToken; // Adjust this path as per your response structure
+        localStorage.setItem("accessToken", newAccessToken);
 
-        // Retry the original request with the new access token
+        if (response.data.refreshToken) {
+          // If your refresh endpoint returns a new refresh token, store it
+          localStorage.setItem("refreshToken", response.data.refreshToken);
+        }
+
+        // Update the original request with the new token and retry
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
-      } catch (err) {
-        console.error("Error refreshing access token:", err);
-        // Handle token refresh failure (e.g., redirect to login page)
+      } catch (refreshError) {
+        // Logout or take some other action if refreshing the token fails
+        return Promise.reject(refreshError);
       }
     }
 
-    // Return the original error if the status is not 401 or the request has already been retried
+    // Return any other errors as is
     return Promise.reject(error);
   }
 );

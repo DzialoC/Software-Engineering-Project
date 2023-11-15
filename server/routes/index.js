@@ -10,6 +10,7 @@ import vehicleRoutes from "./vehicle.route.js"; // Import the vehicle routes
 const router = express.Router();
 
 // Use the routes for different parts of the application
+// router.use()
 router.use("/", userRoutes);
 router.use("/damage-reports", damageReportRoutes);
 router.use("/class-bcdl", classBCDLRoutes);

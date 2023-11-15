@@ -20,9 +20,7 @@ import {
   Register,
 } from "./components/index.js";
 import Admin from "./pages/Admin/index.js";
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import About from "./pages/About/index.js";
 import Contact from "./pages/Contact/index.js";
 // import ErrorPage from './pages/ErrorPage/in';
@@ -33,6 +31,9 @@ import VehicleChecklist from "./pages/VehicleChecklist/index.js";
 import "./App.css";
 
 function App() {
+  const [loginData, setLoginData] = React.useState();
+  const [sessionData, setSessionData] = React.useState();
+  const [logoutData, setLogoutData] = React.useState();
   return (
     <Router>
       <div className="App">

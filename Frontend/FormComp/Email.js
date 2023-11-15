@@ -1,4 +1,5 @@
 import React from 'react';
+import './Email.css'
 
 function EmailInput({ label, placeholder, value, onChange }) {
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import './TextArea.css'
 
 function TextArea({ label, placeholder, value, onChange }) {
   return (

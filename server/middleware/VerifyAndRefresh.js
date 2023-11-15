@@ -1,10 +1,14 @@
+// TODO: Functionality to query refreshtoken if access is expired and methods to
+// handle refreshToken
+
 import jwt from "jsonwebtoken";
 import UserService from "../services/user.service.js";
 
 export const verifyAndRefresh = async (req, res, next) => {
-  const excludedPaths = ["/login"];
+  const excludedPaths = ["/login", "/register", "/logout"];
 
   if (excludedPaths.includes(req.path)) {
+    console.log("get Hit");
     return next();
   }
 

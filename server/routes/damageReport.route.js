@@ -6,11 +6,10 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 const damageReportRouter = express.Router();
 
 // Define damage report routes and apply the token verification middleware
-damageReportRouter.post(
-  "/create",
-  isAuthenticated,
-  DamageReportController.createDamageReport
-);
+damageReportRouter
+  .route("/")
+  .get(isAuthenticated, DamageReportController.getDamageReportByPage)
+  .post(isAuthenticated, DamageReportController.createDamageReport);
 damageReportRouter.get(
   "/page/:pageNumber",
   isAuthenticated,

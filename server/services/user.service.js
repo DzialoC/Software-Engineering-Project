@@ -85,6 +85,13 @@ const UserService = {
     return { accessToken, refreshToken };
   },
 
+  async logout(inputTokens) {
+    try {
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // Get all users
   async getAllUsers() {
     try {

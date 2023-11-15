@@ -10,6 +10,11 @@ const Equipment = db.define("Equipment", {
     unique: true,
   },
 
+  equipmentDescription: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
   equipmentCondition: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -26,7 +31,7 @@ const Equipment = db.define("Equipment", {
 });
 
 (async () => {
-  await db.sync({});
+  await db.sync({ alter: true });
 })();
 
 export default Equipment;

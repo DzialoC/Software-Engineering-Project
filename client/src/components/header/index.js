@@ -1,22 +1,24 @@
 // Header.js
 
-import React from 'react';
-import { HeaderContainer, HeaderContent, HeaderLogo, HeaderLinks } from './header.style.js';
-import Logout from '../Logout/index.js'
-
-
+import React from "react";
+import {
+  HeaderContainer,
+  HeaderContent,
+  HeaderLogo,
+  HeaderLinks,
+} from "./header.style.js";
+import LogoutButton from "../Logout/LogoutButton.js";
 
 const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <HeaderLogo>
-          Atlantic City Public Works
-        </HeaderLogo>
+        <HeaderLogo>Atlantic City Public Works</HeaderLogo>
         <HeaderLinks>
           <a href="/Home">Home</a>
           <a href="/contact">Contact</a>
-          <button onClick={Logout} className="button is-light">Log Out</button>
+          <a href="/login">Login</a>
+          <LogoutButton className="button" /> {/* Apply the "button" class */}
         </HeaderLinks>
       </HeaderContent>
     </HeaderContainer>

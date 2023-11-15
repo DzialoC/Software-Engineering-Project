@@ -6,11 +6,10 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 const equipmentRouter = express.Router();
 
 // Define equipment routes and apply the token verification middleware
-equipmentRouter.post(
-  "/create",
-  isAuthenticated,
-  EquipmentController.createEquipment
-);
+equipmentRouter
+  .route("/")
+  .get(isAuthenticated, EquipmentController.getAllEquipment)
+  .post(isAuthenticated, EquipmentController.createEquipment);
 equipmentRouter.get(
   "/getbyid/:id",
   isAuthenticated,

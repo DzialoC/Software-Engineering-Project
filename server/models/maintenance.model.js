@@ -37,6 +37,14 @@ const Maintenance = db.define("Maintenance", {
       key: "id",
     },
   },
+  cost: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
+
+  partsReplaced: {
+    type: DataTypes.STRING,
+  },
 });
 
 (async () => {

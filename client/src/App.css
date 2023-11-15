@@ -3,6 +3,9 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
     padding: 0;
     border: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F4F7FA;
+    color: #333;
   }
   
   body {
@@ -15,6 +18,11 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
     margin: 0 auto;
     padding: 0 20px;
   }
+
+  .dashboard-container {
+    display: flex;
+    height: 100vh;
+  }
   
   /* Typography */
   h1, h2, h3 {
@@ -23,22 +31,78 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
 
   h1 {
     font-size: 2rem;
+
   }
   
   h2 {
     font-size: 1.5rem;
   }
-  
+
   h3 {
     font-size: 1.2rem;
   }
-  
+
   p {
     margin-bottom: 20px;
     font-size: 1rem;
     line-height: 1.5;
   }
-  
+
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    font-size: 24px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+  }
+
+  .form-content {
+    max-width: 90%; /* or any max-width */
+    margin: 0 auto; /* center the form in the page */
+    padding: 25px;
+    background: #f9f9f9; /* light grey background */
+    border: 1px solid #ddd; /* subtle border */
+    border-radius: 4px; /* rounded corners */
+    font-size: 24px;
+  }
+
+  .form-content div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .form-content input[type="number"] {
+    width: 30%;
+    height: 20px;
+  }
+
+  .form-content textarea {
+    width: 30%;
+    height: 40px;
+  }
+
+  .form-content input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+  }
+
+
+
   /* Buttons */
   .button {
     display: inline-block;
@@ -46,11 +110,13 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
     color: white;
     background-color: #007BFF;
     border-radius: 4px;
+    border: none;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s ease;
+    cursor: pointer;
   }
-  
+
   .button:hover {
     background-color: #0056b3;
   }
@@ -70,19 +136,19 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
   
   /* Form Styles */
   .input, .textarea, .button {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
   }
+
   
   .input:focus, .textarea:focus {
     outline: none;
     border-color: #007BFF;
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .container {
       padding: 0 10px;

@@ -5,11 +5,11 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 const maintenanceRouter = express.Router();
 
 // Define maintenance routes and apply the token verification middleware
-maintenanceRouter.post(
-  "/create",
-  isAuthenticated,
-  MaintenanceController.createMaintenanceLog
-);
+maintenanceRouter
+  .route("/")
+  .get(isAuthenticated, MaintenanceController.getMaintenanceByPage)
+  .post(isAuthenticated, MaintenanceController.createMaintenanceLog);
+
 maintenanceRouter.get(
   "/getbyid/:id",
   isAuthenticated,

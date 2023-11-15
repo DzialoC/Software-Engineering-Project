@@ -6,11 +6,10 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 const localInspectionRouter = express.Router();
 
 // Define local inspection routes and apply the token verification middleware
-localInspectionRouter.post(
-  "/create",
-  isAuthenticated,
-  localInspectionController.createLocalInspection
-);
+localInspectionRouter
+  .route("/")
+  .get(isAuthenticated, localInspectionController.getRecentSpecifiedLogs)
+  .post(isAuthenticated, localInspectionController.createLocalInspection);
 localInspectionRouter.get(
   "/getbyid/:id",
   isAuthenticated,

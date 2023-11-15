@@ -1,57 +1,46 @@
+// actions.js
 import axios from "axios";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "./actionTypes";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
-  return config;
+// Action creator for a login request
+export const loginRequest = () => ({
+  type: LOGIN_REQUEST,
 });
 
-// Response interceptor to refresh the token when it expires
-axiosInstance.interceptors.response.use(
-  (response) => {
-    // Return the response as is if everything is OK
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
+// Action creator for a successful login
+export const loginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  payload: user,
+});
 
-    // Check if the status code indicates that the token has expired
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // mark it so that we don't try to refresh the token again
+// Action creator for a failed login
+export const loginFailure = (error) => ({
+  type: LOGIN_FAILURE,
+  payload: error,
+});
 
-      try {
-        // Send a request to the refresh endpoint to get a new access token
-        const refreshToken = localStorage.getItem("refreshToken");
-        const response = await axiosInstance.post("/refresh", { refreshToken });
+// Asynchronous action to perform the login
+export const login = (credentials) => {
+  return async (dispatch) => {
+    try {
+      dispatch(loginRequest());
 
-        // Store the new access token and the refresh token (if returned) in local storage
-        const newAccessToken = response.data.accessToken; // Adjust this path as per your response structure
-        localStorage.setItem("accessToken", newAccessToken);
+      // Send a login request to your backend API using Axios or any other method
+      const response = await axios.post("/api/login", credentials);
 
-        if (response.data.refreshToken) {
-          // If your refresh endpoint returns a new refresh token, store it
-          localStorage.setItem("refreshToken", response.data.refreshToken);
-        }
+      // Assuming the response contains user data
+      const user = response.data;
 
-        // Update the original request with the new token and retry
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        // Logout or take some other action if refreshing the token fails
-        return Promise.reject(refreshError);
-      }
+      // Dispatch a successful login action with user data
+      dispatch(loginSuccess(user));
+
+      // Send a message to indicate successful login
+      // You can extract the message from the response and use it in your application
+      const message = response.data.message;
+      // Dispatch an action with the message if needed
+      // dispatch(loginMessage(message));
+    } catch (error) {
+      dispatch(loginFailure(error.message || "Login failed"));
     }
-
-    // Return any other errors as is
-    return Promise.reject(error);
-  }
-);
-
-export default axiosInstance;
+  };
+};

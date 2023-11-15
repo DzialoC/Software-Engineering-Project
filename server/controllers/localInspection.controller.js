@@ -42,7 +42,11 @@ const LocalInspectionController = {
 
   async getRecentSpecifiedLogs(req, res) {
     try {
-      const amount = parseInt(req.params.amount);
+      const amount = 25;
+      if (req.params.amount) {
+        amount = parseInt(req.params.amount);
+      }
+
       const recentInspections =
         await LocalInspectionService.getRecentSpecifiedLogs(amount);
       res.status(200).json(recentInspections);

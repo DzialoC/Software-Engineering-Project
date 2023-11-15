@@ -28,6 +28,9 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || password) {
+      return res.status(400).json({ msg: "No information provided" });
+    }
     const { accessToken, refreshToken } = await UserService.login(
       email,
       password
@@ -56,19 +59,29 @@ export const Login = async (req, res) => {
 };
 
 export const Logout = async (req, res) => {
-  const accessToken = req.cookies.accessToken;
-  if (!accessToken) return res.sendStatus(204);
+  try {
+    console.log("hello?");
 
-  res.cookie("refreshToken", "", {
-    maxAge: 0,
-    httpOnly: true,
-  });
-  res.cookie("accessToken", "", {
-    maxAge: 0,
-    httpOnly: true,
-  });
-  // res.clearCookie("accessToken");
-  return res.sendStatus(200);
+    res.cookie("refreshToken", "none", {
+      // set token to none and expire after 5 seconds
+      expires: new Date(Date.now() + 5 * 1000),
+      maxAge: 0,
+      secure: false,
+      sameSite: "Strict",
+      httpOnly: true,
+    });
+    res.cookie("accessToken", "none", {
+      expires: new Date(Date.now() + 5 * 1000),
+      maxAge: 0,
+      secure: false,
+      sameSite: "Strict",
+      httpOnly: true,
+    });
+    console.log("sending it out");
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(error.status || 500).json({ msg: error.message });
+  }
 };
 
 export const GetAllUsers = async (req, res) => {

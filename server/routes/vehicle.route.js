@@ -3,7 +3,7 @@ import VehicleController from "../controllers/vehicle.controller.js";
 import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const vehicleRouter = express.Router();
-
+// /vehicle/
 // Define vehicle routes and apply the token verification middleware
 vehicleRouter.get(
   "/getbyid/:id",

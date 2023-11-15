@@ -6,11 +6,10 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 const classBCDLRouter = express.Router();
 
 // Define classBCDL routes and apply the token verification middleware
-classBCDLRouter.post(
-  "/create",
-  isAuthenticated,
-  ClassBCDLController.createClassBCDL
-);
+classBCDLRouter
+  .route("/")
+  .get(isAuthenticated, ClassBCDLController.getClassCDLByPage)
+  .post(isAuthenticated, ClassBCDLController.createClassBCDL);
 classBCDLRouter.get(
   "/getbyid/:id",
   isAuthenticated,

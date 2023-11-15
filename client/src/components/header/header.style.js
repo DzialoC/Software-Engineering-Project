@@ -1,10 +1,10 @@
 // Header.styles.js
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  background-color: #007BFF;
+  background-color: #007bff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
   color: #fff;
@@ -35,12 +35,13 @@ export const HeaderLinks = styled.nav`
   display: flex;
   gap: 20px;
 
-  & a, & .button {
+  & a,
+  & .button {
     color: #fff;
     text-decoration: none;
     transition: color 0.3s;
     padding: 8px 16px; // Adjust padding as required
-    font-size: 16px;   // Adjust font-size as required
+    font-size: 16px; // Adjust font-size as required
     border: none;
     background-color: transparent;
     display: inline-flex;
@@ -55,7 +56,7 @@ export const HeaderLinks = styled.nav`
 
   & .button.is-light {
     background-color: #fff; // This will give the button a white background
-    color: #007BFF;         // This will give the button a blue text color
+    color: #007bff; // This will give the button a blue text color
     border: 1px solid #fff; // Optional: Add border to the button
   }
 
@@ -63,4 +64,3 @@ export const HeaderLinks = styled.nav`
     margin-top: 10px;
   }
 `;
-

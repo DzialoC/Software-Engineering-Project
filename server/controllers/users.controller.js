@@ -28,14 +28,15 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || password) {
+    //Added ! to password
+    if (!email || !password) {
       return res.status(400).json({ msg: "No information provided" });
     }
     const { accessToken, refreshToken } = await UserService.login(
       email,
       password
     );
-
+  
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: false, // Use secure cookies in production

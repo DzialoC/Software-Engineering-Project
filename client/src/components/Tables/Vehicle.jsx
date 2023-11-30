@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function GetAllVehicles() {
-  const [vehicles, setVehicles] = useState([]);
-  const [selectedVehicles, setSelectedVehicles] = useState([]);
+  let [vehicles, setVehicles] = useState([]);
+  let [selectedVehicles, setSelectedVehicles] = useState([]);
 
   useEffect(() => {
     async function fetchVehicles() {
@@ -34,7 +34,7 @@ function GetAllVehicles() {
     setVehicles(
       vehicles.map((vehicle) => {
         if (vehicle.vehicleID === vehicleID) {
-          return { ...vehicle, [field]: value };
+          vehicle[field] = value;
         }
         return vehicle;
       })
@@ -47,14 +47,16 @@ function GetAllVehicles() {
       return;
     }
     for (const vehicleID of selectedVehicles) {
-      const vehicleToUpdate = vehicles.find(
-        (vehicle) => vehicle.id === vehicleID
+      console.log(vehicles);
+      let vehicleToUpdate = vehicles.find(
+        (vehicle) => vehicle.vehicleID === vehicleID
       );
       await axios.put(
         `http://localhost:5000/vehicles/update/${vehicleID}`,
         vehicleToUpdate,
         { withCredentials: true }
       );
+      console.log(vehicleToUpdate);
     }
     alert("Selected vehicles updated successfully.");
 
@@ -76,8 +78,9 @@ function GetAllVehicles() {
       }
       alert("Selected vehicles removed successfully.");
 
-      // Optionally, refresh the list of vehicles
-      // fetchVehicles(); or setVehicles() with updated list
+      setVehicles((prevVehicles) =>
+        prevVehicles.filter((v) => !selectedVehicles.includes(v.vehicleID))
+      );
     } catch (error) {
       console.error("Error removing vehicles:", error);
       alert("Error removing vehicles.");
@@ -118,7 +121,7 @@ function GetAllVehicles() {
                   value={vehicle.vehicleName}
                   onChange={(e) =>
                     handleFieldChange(
-                      vehicle.vehicleName,
+                      vehicle.vehicleID,
                       "vehicleName",
                       e.target.value
                     )
@@ -131,7 +134,7 @@ function GetAllVehicles() {
                   value={vehicle.vehicleTag}
                   onChange={(e) =>
                     handleFieldChange(
-                      vehicle.vehicleTag,
+                      vehicle.vehicleID,
                       "vehicleTag",
                       e.target.value
                     )
@@ -144,7 +147,7 @@ function GetAllVehicles() {
                   value={vehicle.vehicleCondition}
                   onChange={(e) =>
                     handleFieldChange(
-                      vehicle.vehicleCondition,
+                      vehicle.vehicleID,
                       "vehicleCondition",
                       e.target.value
                     )
@@ -157,7 +160,7 @@ function GetAllVehicles() {
                   value={vehicle.lastUser}
                   onChange={(e) =>
                     handleFieldChange(
-                      vehicle.lastUser,
+                      vehicle.vehicleID,
                       "lastUser",
                       e.target.value
                     )

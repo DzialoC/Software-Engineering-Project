@@ -36,9 +36,7 @@ const VehicleController = {
   async updateVehicleById(req, res) {
     try {
       const id = req.params.id;
-      console.log("id: ", id);
       const updateData = req.body;
-      console.log("updateData: ", updateData);
       await VehicleService.updateVehicleById(id, updateData);
       const updatedVehicle = await VehicleService.getVehicleById(id);
       res.status(200).json(updatedVehicle);
@@ -50,9 +48,10 @@ const VehicleController = {
   async deleteVehicleById(req, res) {
     try {
       const id = req.params.id;
-      const success = await VehicleService.deleteVehicleById(id);
-      if (!success) {
-        return res.status(404).json({ message: "Vehicle not found" });
+      console.log(id);
+      const failure = await VehicleService.deleteVehicleById(id);
+      if (failure) {
+        return res.status(404).json({ message: "Vehicle ID not found." });
       }
       res.status(200).json({ message: "Vehicle deleted successfully" });
     } catch (error) {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const VehicleForm = () => {
   // Define the initial state to store form input values
@@ -18,22 +19,14 @@ const VehicleForm = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Send the form data to your server at localhost:5000/
-    fetch("http://localhost:5000/vehicles/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server, if needed
-        console.log("Server response:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    try {
+      axios.create("http://localhost:5000/vehicles/", {
+        formData,
+        withCredentials: true,
       });
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (

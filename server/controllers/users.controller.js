@@ -27,8 +27,10 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   try {
+    console.log("hit");
     const { email, password } = req.body;
-    //Added ! to password
+    console.log("hit2", email);
+    console.log("hit3", req.body);
     if (!email || !password) {
       return res.status(400).json({ msg: "No information provided" });
     }
@@ -36,7 +38,7 @@ export const Login = async (req, res) => {
       email,
       password
     );
-  
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: false, // Use secure cookies in production

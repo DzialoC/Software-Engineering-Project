@@ -2,11 +2,53 @@ import ClassBCDL from "../models/classBCDL.model.js";
 
 const ClassBCDLService = {
   async createClassBCDL(formInput) {
-    const classBCDLInspection = await ClassBCDL.create(formInput);
+    console.log("made it: ", battery);
+    const classBCDLInspection = await ClassBCDL.create({
+      vehicleID: vehicleID,
+      userID: parsedUserID,
+      comment: comment,
+      airHydraulicBrakeCheck: airHydraulicBrakeCheck,
+      parkingTrailerBrakeCheck: parkingTrailerBrakeCheck,
+      serviceBrakeCheck: serviceBrakeCheck,
+      lightingIndicators: lightingIndicators,
+      emergencyEquipment: emergencyEquipment,
+      windshieldTrafficMonitoringDevices: windshieldTrafficMonitoringDevices,
+      wipersWashers: wipersWashers,
+      heaterDefroster: heaterDefroster,
+      horns: horns,
+      allExternalLights: allExternalLights,
+      lensesFront: lensesFront,
+      fluidLevels: fluidLevels,
+      fluidAirLeaks: fluidAirLeaks,
+      steeringSystems: steeringSystems,
+      tires: tires,
+      rims: rims,
+      lugNuts: lugNuts,
+      springsAirBagsShocks: springsAirBagsShocks,
+      brakeLinesHosesLeaks: brakeLinesHosesLeaks,
+      brakeContaminates: brakeContaminates,
+      lensesReflectorsSide: lensesReflectorsSide,
+      trafficMonitoringDevicesSide: trafficMonitoringDevicesSide,
+      battery: battery,
+      fuelTanks: fuelTanks,
+      frames: frames,
+      lensesReflectorsRear: lensesReflectorsRear,
+    });
+    if (classBCDLInspection) {
+      console.log("it made it?");
+    }
     if (!classBCDLInspection) {
       throw new Error("Class B CDL could not be created");
     }
     return classBCDLInspection;
+  },
+
+  async getAllClassBCDL() {
+    const allForms = await ClassBCDL.findAll();
+    if (!allForms) {
+      throw new Error("No forms found");
+    }
+    return allForms;
   },
 
   async getClassBCDLById(reqId) {

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function VehicleInspectionForm() {
   const [formData, setFormData] = useState({
     vehicleID: "",
-    userID: "",
+    userID: null,
     comment: "",
     airHydraulicBrakeCheck: false,
     parkingTrailerBrakeCheck: false,
@@ -45,16 +46,14 @@ function VehicleInspectionForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/class-bcdl/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post(
+        "http://localhost:5000/class-bcdl/",
+        formData,
+        { withCredentials: true }
+      );
 
-      if (response.ok) {
-        console.log("Form data sent successfully");
+      if (response.status === 200) {
+        console.log("Form data sent successfully", formData);
         // Handle any success logic here
       } else {
         console.error("Form data submission failed");
@@ -67,7 +66,6 @@ function VehicleInspectionForm() {
   };
 
   return (
-    // <form onSubmit={handleSubmit}>
     <main>
       <form className="form-content" onSubmit={handleSubmit}>
         <h1>Class B CDL Inspection Form</h1>

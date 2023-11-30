@@ -29,12 +29,9 @@ const VechicleService = {
     }
   },
 
-  // Update multiple instances that match the where options. The promise returns an array with one or two
-  // * elements. The first element is always the number of affected rows, while the second element is the actual
-  // * affected rows (only supported in postgres and mssql with `options.returning` true.)
   async updateVehicleById(id, updateData) {
     try {
-      await Vehicle.update(updateData, { where: { id: id } });
+      await Vehicle.update(updateData, { where: { vehicleID: id } });
     } catch (error) {
       throw error;
     }

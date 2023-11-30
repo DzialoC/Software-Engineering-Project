@@ -11,7 +11,7 @@ classBCDLRouter
   .get(isAuthenticated, ClassBCDLController.getClassCDLByPage)
   .post(isAuthenticated, ClassBCDLController.createClassBCDL);
 classBCDLRouter.get(
-  "/getbyid/:id",
+  "/id/:id",
   isAuthenticated,
   ClassBCDLController.getClassBCDLById
 );

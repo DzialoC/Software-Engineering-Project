@@ -16,7 +16,7 @@ const Header = () => {
         <HeaderLogo>Atlantic City Public Works</HeaderLogo>
         <HeaderLinks>
           <a href="/Home">Home</a>
-          <a href="/contact">Contact</a>
+          <a href="/register">Register</a>
           <a href="/login">Login</a>
           <LogoutButton className="button" /> {/* Apply the "button" class */}
         </HeaderLinks>

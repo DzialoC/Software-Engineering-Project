@@ -2,11 +2,11 @@ import LocalInspection from "../models/localInspection.model.js";
 
 const LocalInspectionService = {
   async createLocalInspection(inspectionData) {
-    const inspectionLog = await LocalInspection.create(inspectionData);
-    if (!inspectionLog) {
+    try {
+      await LocalInspection.create(inspectionData);
+    } catch (error) {
       throw new Error("Inspection Log could not be created");
     }
-    return inspectionLog;
   },
 
   async getLocalInspectionById(id) {

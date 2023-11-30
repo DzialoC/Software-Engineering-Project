@@ -1,0 +1,12 @@
+.header {
+    background-color: #3498db; /* Set background color */
+    color: #fff; /* Set text color */
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Style for the h1 element */
+  .header h1 {
+    margin: 0; /* Remove default margin for h1 */
+    font-size: 24px; /* Set font size */
+  }

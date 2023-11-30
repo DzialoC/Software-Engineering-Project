@@ -1,0 +1,25 @@
+.input-field {
+    margin-bottom: 15px;
+  }
+  
+  /* Style for the label */
+  .input-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  /* Style for the select element */
+  .input-field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  
+  /* Optional: Style for the select options */
+  .input-field select option {
+    padding: 10px;
+  }

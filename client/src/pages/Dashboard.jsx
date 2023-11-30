@@ -31,6 +31,10 @@ const ClassBCDLTable = React.lazy(() =>
   import("../components/Tables/ClassBCDL.jsx")
 );
 
+const EmployeesTable = React.lazy(() =>
+  import("../components/Tables/Employees.jsx")
+);
+
 const Dashboard = () => {
   // State to track the current selected component
   const [currentComponent, setCurrentComponent] = useState("ClassBCDL");
@@ -64,6 +68,8 @@ const Dashboard = () => {
         return <EquipmentTable />;
       case "VehicleTable":
         return <VehicleTable />;
+      case "EmployeesTable":
+        return <EmployeesTable />;
       default:
         return <ClassBCDL />;
     }

@@ -31,7 +31,7 @@ const Equipment = db.define("Equipment", {
 });
 
 (async () => {
-  await db.sync({ alter: true });
+  await db.sync({});
 })();
 
 export default Equipment;

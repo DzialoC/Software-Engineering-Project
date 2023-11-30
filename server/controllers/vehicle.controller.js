@@ -36,7 +36,9 @@ const VehicleController = {
   async updateVehicleById(req, res) {
     try {
       const id = req.params.id;
+      console.log("id: ", id);
       const updateData = req.body;
+      console.log("updateData: ", updateData);
       await VehicleService.updateVehicleById(id, updateData);
       const updatedVehicle = await VehicleService.getVehicleById(id);
       res.status(200).json(updatedVehicle);

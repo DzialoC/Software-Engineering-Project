@@ -7,7 +7,6 @@ const UserService = {
 
   // Create a new user
   async createUser({ name, email, password }) {
-    console.log("Name: ", name, " | email: ", email, " | password: ", password);
     // See if email exists
     const userByEmail = await Users.findOne({ where: { email: email } });
     if (userByEmail) {

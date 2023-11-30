@@ -27,8 +27,11 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   try {
+    console.log("hit");
     const { email, password } = req.body;
-    if (!email || password) {
+    console.log("hit2", email);
+    console.log("hit3", req.body);
+    if (!email || !password) {
       return res.status(400).json({ msg: "No information provided" });
     }
     const { accessToken, refreshToken } = await UserService.login(

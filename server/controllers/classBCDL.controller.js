@@ -4,12 +4,23 @@ const ClassBCDLController = {
   async createClassBCDL(req, res) {
     try {
       const formInput = req.body;
+      console.log("Package: ", formInput);
       const classBCDLInspection = await ClassBCDLService.createClassBCDL(
         formInput
       );
       res.status(201).json(classBCDLInspection);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getAllClassBCDL(req, res) {
+    try {
+      const forms = ClassBCDLService.getAllClassBCDL();
+      return res.status(200).json(forms);
+    } catch (error) {
+      console.error("Error fetching CDL forms:", error);
+      return res.sendStatus(500);
     }
   },
 

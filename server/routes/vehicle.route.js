@@ -15,12 +15,12 @@ vehicleRouter
   .get(isAuthenticated, VehicleController.getAllVehicles)
   .post(isAuthenticated, VehicleController.createVehicle);
 vehicleRouter.put(
-  "/updatebyid/:id",
+  "/update/:id",
   isAuthenticated,
   VehicleController.updateVehicleById
 );
 vehicleRouter.delete(
-  "/deletebyid/:id",
+  "/delete/:id",
   isAuthenticated,
   VehicleController.deleteVehicleById
 );

@@ -169,5 +169,3 @@ export const DeleteUserById = async (req, res) => {
     return res.sendStatus(500);
   }
 };
-
-//functions that need to implemented: refreshtokens, isAdmin, getUserByEmail.

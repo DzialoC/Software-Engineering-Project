@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const LocalInspection = () => {
   // Define the initial state to store form input values
@@ -10,20 +11,19 @@ const LocalInspection = () => {
     mileage: "",
     workTicket: "",
     personReleasingVehicle: "",
-    userID: "",
-    bodyOfVehicle: false,
-    tiresConditionAndAirPressure: false,
-    horn: false,
-    stateInspectionAndLicSticker: false,
-    wipersReservoir: false,
-    lowAndHighBeamHeadlights: false,
-    brakeLights: false,
-    turnSignalLights: false,
-    emergencyFlasherLights: false,
-    vehicleInsuranceCardValid: false,
-    gasTankFull: false,
-    emergencyInstructions: false,
-    washVehicle: false,
+    bodyOfVehicle: null,
+    tiresConditionAndAirPressure: null,
+    horn: null,
+    stateInspectionAndLicSticker: null,
+    wipersReservoir: null,
+    lowAndHighBeamHeadlights: null,
+    brakeLights: null,
+    turnSignalLights: null,
+    emergencyFlasherLights: null,
+    vehicleInsuranceCardValid: null,
+    gasTankFull: null,
+    emergencyInstructions: null,
+    washVehicle: null,
     comments: "",
     dpwSignature: "",
   });
@@ -36,24 +36,29 @@ const LocalInspection = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send the form data to your server at localhost:5000/localinspections/
-    fetch("http://localhost:5000/local-inspections/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server, if needed
-        console.log("Server response:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+
+    if (
+      true
+      // Form data has been entered
+    ) {
+      try {
+        console.log(formData);
+        const confirmation = await axios.post(
+          "http://localhost:5000/local-inspections/",
+          formData,
+          {
+            withCredentials: true,
+          }
+        );
+        if (confirmation) {
+          alert("New Local Inspection entry success!");
+        }
+      } catch (error) {
+        alert(error);
+      }
+    }
   };
 
   return (
@@ -139,18 +144,6 @@ const LocalInspection = () => {
             id="personReleasingVehicle"
             name="personReleasingVehicle"
             value={formData.personReleasingVehicle}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="userID">User ID:</label>
-          <input
-            type="number"
-            id="userID"
-            name="userID"
-            value={formData.userID}
             onChange={handleInputChange}
             required
           />

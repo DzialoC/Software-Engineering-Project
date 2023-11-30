@@ -1,12 +1,15 @@
 import LocalInspectionService from "../services/localInspection.service.js";
 
+import util from "../utils/util.js";
+
 const LocalInspectionController = {
   async createLocalInspection(req, res) {
     try {
+      const userId = util.getUserIdByAccessToken(req);
       const inspectionData = req.body;
-      const inspectionLog = await LocalInspectionService.createLocalInspection(
-        inspectionData
-      );
+      inspectionData.userId = userId;
+      const inspectionLog =
+        await LocalInspectionService.createLocalInspection();
       res.status(201).json(inspectionLog);
     } catch (error) {
       res.status(500).json({ message: error.message });

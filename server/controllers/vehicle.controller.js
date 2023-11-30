@@ -3,8 +3,16 @@ import VehicleService from "../services/vehicle.service.js";
 const VehicleController = {
   async createVehicle(req, res) {
     try {
-      const vehicleData = req.body;
-      const vehicle = await VehicleService.createVehicle(vehicleData);
+      const { vehicleID, vehicleName, vehicleTag, vehicleCondition, lastUser } =
+        req.body;
+
+      const vehicle = await VehicleService.createVehicle({
+        vehicleID,
+        vehicleName,
+        vehicleTag,
+        vehicleCondition,
+        lastUser,
+      });
       res.status(201).json(vehicle);
     } catch (error) {
       res.status(500).json({ message: error.message });

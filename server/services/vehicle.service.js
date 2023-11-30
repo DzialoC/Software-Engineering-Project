@@ -1,12 +1,23 @@
 import Vehicle from "../models/vehicle.model.js";
 
 const VechicleService = {
-  async createVehicle(vehicleData) {
+  async createVehicle({
+    vehicleID,
+    vehicleName,
+    vehicleTag,
+    vehicleCondition,
+    lastUser,
+  }) {
     try {
-      const vehicle = await Vehicle.create(vehicleData);
-      return vehicle;
+      await Vehicle.create({
+        vehicleID: vehicleID,
+        vehicleName: vehicleName,
+        vehicleTag: vehicleTag,
+        vehicleCondition: vehicleCondition,
+        lastUser: lastUser,
+      });
     } catch (error) {
-      throw error;
+      throw new Error("Vehicle ID already exists");
     }
   },
 

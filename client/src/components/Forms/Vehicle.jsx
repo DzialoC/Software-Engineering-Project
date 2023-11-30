@@ -4,28 +4,46 @@ import axios from "axios";
 const VehicleForm = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
+    vehicleID: "",
     vehicleName: "",
     vehicleTag: "",
     vehicleCondition: "",
-    lastUser: "",
+    lastUser: null,
   });
 
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      formData.vehicleID.trim() === "" ||
+      formData.vehicleName.trim() === "" ||
+      formData.vehicleTag.trim() === "" ||
+      formData.vehicleCondition.trim() === ""
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
     try {
-      axios.create("http://localhost:5000/vehicles/", {
+      const confirmation = await axios.post(
+        "http://localhost:5000/vehicles/",
         formData,
-        withCredentials: true,
-      });
+        {
+          withCredentials: true,
+        }
+      );
+      if (confirmation) {
+        alert("New vehicle entry success!");
+      }
     } catch (error) {
-      throw error;
+      alert(error);
     }
   };
 
@@ -33,6 +51,16 @@ const VehicleForm = () => {
     <main>
       <form className="form-content" onSubmit={handleSubmit}>
         <h1>New Vehicle Form</h1>
+        <div>
+          <label htmlFor="vehicleID">Vehicle Identification Number:</label>
+          <input
+            type="text"
+            id="vehicleID"
+            name="vehicleID"
+            value={formData.vehicleID}
+            onChange={handleInputChange}
+          />
+        </div>
         <div>
           <label htmlFor="vehicleName">Vehicle Name:</label>
           <input

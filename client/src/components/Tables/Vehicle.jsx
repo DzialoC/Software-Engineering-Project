@@ -47,7 +47,6 @@ function GetAllVehicles() {
       return;
     }
     for (const vehicleID of selectedVehicles) {
-      console.log(vehicles);
       let vehicleToUpdate = vehicles.find(
         (vehicle) => vehicle.vehicleID === vehicleID
       );
@@ -56,7 +55,6 @@ function GetAllVehicles() {
         vehicleToUpdate,
         { withCredentials: true }
       );
-      console.log(vehicleToUpdate);
     }
     alert("Selected vehicles updated successfully.");
 

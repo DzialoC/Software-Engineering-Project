@@ -3,7 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 //trying redux
 import { useDisatch, useDispatch } from "react-redux";
-import { loginUser, loginSucess, loginFailure, loginRequest } from "../../actions/authActions";
+import {
+  loginUser,
+  loginSucess,
+  loginFailure,
+  loginRequest,
+} from "../../actions/authActions.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +39,6 @@ const Login = () => {
         dispatch(loginSucess());
 
         history("/dashboard");
-
       } else {
         // Handle cases where there might be a response but no access token
         //redux

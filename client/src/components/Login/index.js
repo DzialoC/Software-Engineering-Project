@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+//trying redux
+import { useDisatch, useDispatch } from "react-redux";
+import { loginUser, loginSucess, loginFailure, loginRequest } from "../../actions/authActions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,9 +11,15 @@ const Login = () => {
   const [msg, setMsg] = useState("");
   const history = useNavigate();
 
+  //redux
+  const dispatch = useDispatch();
+
   const Auth = async (e) => {
     e.preventDefault();
     try {
+      //redux
+      dispatch(loginRequest());
+
       const response = await axios.post(
         "http://localhost:5000/login",
         {
@@ -21,12 +30,21 @@ const Login = () => {
       ); // Ensure withCredentials is true to send cookies
 
       if (response.data.message === "Login successful") {
+        //redux
+        dispatch(loginSucess());
+
         history("/dashboard");
+
       } else {
         // Handle cases where there might be a response but no access token
+        //redux
+        dispatch(loginFailure());
+
         setMsg("Login failed. Please try again.");
       }
     } catch (error) {
+      //redux
+      dispatch(loginFailure());
       if (error.response) {
         setMsg(error.response.data.msg);
       }

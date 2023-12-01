@@ -11,7 +11,7 @@ const LogoutButton = ({ className }) => {
   const handleLogout = async () => {
     try {
       // Make a logout request to the server
-      await axios.delete("http://localhost:5000/logout");
+      await axios.delete("http://localhost:5000/logout", {withCredentials: true});
 
       // Dispatch logout action to update Redux state
       dispatch(logout());

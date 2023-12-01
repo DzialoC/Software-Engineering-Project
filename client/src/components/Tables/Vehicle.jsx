@@ -96,9 +96,11 @@ function GetAllVehicles() {
           <tr>
             <th>Select</th>
             <th>ID</th>
-            <th>Vehicle Name</th>
             <th>Vehicle Tag</th>
             <th>Vehicle Condition</th>
+            <th>Vehicle Make</th>
+            <th>Vehicle Model</th>
+            <th>Vehicle Year</th>
             <th>Last User</th>
           </tr>
         </thead>
@@ -110,20 +112,6 @@ function GetAllVehicles() {
                   type="checkbox"
                   checked={selectedVehicles.includes(vehicle.vehicleID)}
                   onChange={() => handleCheckboxChange(vehicle.vehicleID)}
-                />
-              </td>
-              <td>{vehicle.vehicleID}</td>
-              <td>
-                <input
-                  type="text"
-                  value={vehicle.vehicleName}
-                  onChange={(e) =>
-                    handleFieldChange(
-                      vehicle.vehicleID,
-                      "vehicleName",
-                      e.target.value
-                    )
-                  }
                 />
               </td>
               <td>
@@ -152,6 +140,47 @@ function GetAllVehicles() {
                   }
                 />
               </td>
+
+              <td>
+                <input
+                  type="text"
+                  value={vehicle.vehicleMake}
+                  onChange={(e) =>
+                    handleFieldChange(
+                      vehicle.vehicleID,
+                      "vehicleMake",
+                      e.target.value
+                    )
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={vehicle.vehicleModel}
+                  onChange={(e) =>
+                    handleFieldChange(
+                      vehicle.vehicleID,
+                      "vehicleModel",
+                      e.target.value
+                    )
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={vehicle.vehicleYear}
+                  onChange={(e) =>
+                    handleFieldChange(
+                      vehicle.vehicleID,
+                      "vehicleYear",
+                      e.target.value
+                    )
+                  }
+                />
+              </td>
+
               <td>
                 <input
                   type="text"

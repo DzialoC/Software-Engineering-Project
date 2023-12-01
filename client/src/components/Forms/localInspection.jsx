@@ -4,8 +4,6 @@ import axios from "axios";
 const LocalInspection = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
-    vehicleNumber: "",
-    yearMakeModel: "",
     tag: "",
     date: "",
     mileage: "",
@@ -38,26 +36,20 @@ const LocalInspection = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (
-      true
-      // Form data has been entered
-    ) {
-      try {
-        console.log(formData);
-        const confirmation = await axios.post(
-          "http://localhost:5000/local-inspections/",
-          formData,
-          {
-            withCredentials: true,
-          }
-        );
-        if (confirmation) {
-          alert("New Local Inspection entry success!");
+    try {
+      console.log(formData);
+      const confirmation = await axios.post(
+        "http://localhost:5000/local-inspections/",
+        formData,
+        {
+          withCredentials: true,
         }
-      } catch (error) {
-        alert(error);
+      );
+      if (confirmation) {
+        alert("New Local Inspection entry success!");
       }
+    } catch (error) {
+      alert(error);
     }
   };
 
@@ -65,32 +57,9 @@ const LocalInspection = () => {
     <main>
       <form className="form-content" onSubmit={handleSubmit}>
         <h1>Local Vehicle Inspection</h1>
-        <div>
-          <label htmlFor="vehicleNumber">Vehicle Number:</label>
-          <input
-            type="text"
-            id="vehicleNumber"
-            name="vehicleNumber"
-            value={formData.vehicleNumber}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
 
         <div>
-          <label htmlFor="yearMakeModel">Year Make Model:</label>
-          <input
-            type="text"
-            id="yearMakeModel"
-            name="yearMakeModel"
-            value={formData.yearMakeModel}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="tag">Tag:</label>
+          <label htmlFor="tag">Vehicle Tag:</label>
           <input
             type="text"
             id="tag"

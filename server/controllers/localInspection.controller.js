@@ -7,10 +7,11 @@ const LocalInspectionController = {
     try {
       const userId = util.getUserIdByAccessToken(req);
       const inspectionData = req.body;
-      inspectionData.userId = userId;
-      const inspectionLog =
-        await LocalInspectionService.createLocalInspection();
-      res.status(201).json(inspectionLog);
+      inspectionData.userID = userId;
+      const inspectionLog = await LocalInspectionService.createLocalInspection(
+        inspectionData
+      );
+      res.status(201).json("Submittion Sucess!");
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -45,7 +46,7 @@ const LocalInspectionController = {
 
   async getRecentSpecifiedLogs(req, res) {
     try {
-      const amount = 25;
+      const amount = 35;
       if (req.params.amount) {
         amount = parseInt(req.params.amount);
       }

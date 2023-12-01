@@ -7,21 +7,37 @@ const Vehicle = db.define(
   {
     vehicleID: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
       unique: true,
     },
 
     vehicleName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(64),
     },
 
     vehicleTag: {
       type: DataTypes.STRING(6),
+      allowNull: false,
     },
 
     vehicleCondition: {
       type: DataTypes.STRING(12),
+      allowNull: false,
+    },
+
+    vehicleMake: {
+      type: DataTypes.STRING(18),
+      allowNull: false,
+    },
+
+    vehicleModel: {
+      type: DataTypes.STRING(18),
+      allowNull: false,
+    },
+
+    vehicleYear: {
+      type: DataTypes.INTEGER(4),
       allowNull: false,
     },
 

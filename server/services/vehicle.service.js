@@ -2,22 +2,24 @@ import Vehicle from "../models/vehicle.model.js";
 
 const VechicleService = {
   async createVehicle({
-    vehicleID,
-    vehicleName,
     vehicleTag,
     vehicleCondition,
+    vehicleMake,
+    vehicleModel,
+    vehicleYear,
     lastUser,
   }) {
     try {
       await Vehicle.create({
-        vehicleID: vehicleID,
-        vehicleName: vehicleName,
         vehicleTag: vehicleTag,
         vehicleCondition: vehicleCondition,
+        vehicleMake: vehicleMake,
+        vehicleModel: vehicleModel,
+        vehicleYear: vehicleYear,
         lastUser: lastUser,
       });
     } catch (error) {
-      throw new Error("Vehicle ID already exists");
+      throw new Error("Vehicle ID already exists", error);
     }
   },
 
@@ -26,6 +28,18 @@ const VechicleService = {
     try {
       const vehicle = await Vehicle.findByPk(id);
       return vehicle;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getVehicleByTag(tag) {
+    try {
+      const vehicle = await Vehicle.findOne({ where: { vehicleTag: tag } });
+      if (vehicle) {
+        return vehicle;
+      }
+      return error;
     } catch (error) {
       throw error;
     }

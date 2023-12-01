@@ -4,10 +4,11 @@ import axios from "axios";
 const VehicleForm = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
-    vehicleID: "",
-    vehicleName: "",
     vehicleTag: "",
     vehicleCondition: "",
+    vehicleMake: "",
+    vehicleModel: "",
+    vehicleYear: "",
     lastUser: null,
   });
 
@@ -21,16 +22,6 @@ const VehicleForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (
-      formData.vehicleID.trim() === "" ||
-      formData.vehicleName.trim() === "" ||
-      formData.vehicleTag.trim() === "" ||
-      formData.vehicleCondition.trim() === ""
-    ) {
-      alert("Please fill in all required fields.");
-      return;
-    }
     try {
       const confirmation = await axios.post(
         "http://localhost:5000/vehicles/",
@@ -51,26 +42,6 @@ const VehicleForm = () => {
     <main>
       <form className="form-content" onSubmit={handleSubmit}>
         <h1>New Vehicle Form</h1>
-        <div>
-          <label htmlFor="vehicleID">Vehicle Identification Number:</label>
-          <input
-            type="text"
-            id="vehicleID"
-            name="vehicleID"
-            value={formData.vehicleID}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="vehicleName">Vehicle Name:</label>
-          <input
-            type="text"
-            id="vehicleName"
-            name="vehicleName"
-            value={formData.vehicleName}
-            onChange={handleInputChange}
-          />
-        </div>
 
         <div>
           <label htmlFor="vehicleTag">Vehicle Tag:</label>
@@ -80,6 +51,7 @@ const VehicleForm = () => {
             name="vehicleTag"
             value={formData.vehicleTag}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -90,6 +62,42 @@ const VehicleForm = () => {
             id="vehicleCondition"
             name="vehicleCondition"
             value={formData.vehicleCondition}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="vehicleMake">Vehicle Make:</label>
+          <input
+            type="text"
+            id="vehicleMake"
+            name="vehicleMake"
+            value={formData.vehicleMake}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="vehicleModel">Vehicle Model:</label>
+          <input
+            type="text"
+            id="vehicleModel"
+            name="vehicleModel"
+            value={formData.vehicleModel}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="vehicleYear">Vehicle Year:</label>
+          <input
+            type="text"
+            id="vehicleYear"
+            name="vehicleYear"
+            value={formData.vehicleYear}
             onChange={handleInputChange}
             required
           />

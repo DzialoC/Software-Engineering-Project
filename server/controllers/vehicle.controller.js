@@ -3,14 +3,21 @@ import VehicleService from "../services/vehicle.service.js";
 const VehicleController = {
   async createVehicle(req, res) {
     try {
-      const { vehicleID, vehicleName, vehicleTag, vehicleCondition, lastUser } =
-        req.body;
-
-      const vehicle = await VehicleService.createVehicle({
-        vehicleID,
-        vehicleName,
+      const {
         vehicleTag,
         vehicleCondition,
+        vehicleMake,
+        vehicleModel,
+        vehicleYear,
+        lastUser,
+      } = req.body;
+
+      const vehicle = await VehicleService.createVehicle({
+        vehicleTag,
+        vehicleCondition,
+        vehicleMake,
+        vehicleModel,
+        vehicleYear,
         lastUser,
       });
       res.status(201).json(vehicle);

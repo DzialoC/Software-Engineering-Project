@@ -65,7 +65,7 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
   .main-content {
     flex: 1;
     padding: 20px;
-    /* background-color: #0056b3; */
+    background-color: #0056b3;
     border-left: 1px solid #ccc;
     overflow-y: auto;
   }
@@ -139,10 +139,18 @@ body, h1, h2, h3, p, ul, ol, li, form, button {
   }
   
   /* Form Styles */
-  .input, .textarea, .button {
-    width: 100%;
+  .input, .textarea{
+    width: 95%;
     padding: 15px;
     margin-bottom: 20px;
+    border: 5px solid #ddd;
+    border-radius: 20px;
+    font-size: 25px;
+  }
+
+  .button {
+    width: 99%;
+    padding: 15px;
     border: 5px solid #ddd;
     border-radius: 20px;
     font-size: 25px;

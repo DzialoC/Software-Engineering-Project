@@ -116,19 +116,32 @@ const UserService = {
     }
   },
 
-  // Used to see if an accont that is registerings email already exists within the database.
-  async emailExists(emailInput) {
+  async getUserNameFromId(inputID) {
     try {
-      const email = Users.findOne({ where: { email: emailInput } });
-      if (!email) {
-        const error = new Error("An account with this email already exists");
-        error.status = 400;
-        return error;
-      }
-      return true;
+      const user = await Users.findByPk(inputID, {
+        attributes: ["name"],
+      });
+      const userName = user.name;
+      return userName;
     } catch (error) {
       throw error;
     }
+  },
+
+  async getUserNameFromIdAppendForms(inputForms) {
+    const formsWithName = await Promise.all(
+      inputForms.map(async (form) => {
+        console.log("Form pass", form);
+        const userInfo = await this.getUserNameFromId(form.userID);
+        console.log("userInfo ", userInfo);
+        return {
+          ...form,
+          userName: userInfo,
+        };
+      })
+    );
+    console.log("formsWithName, ", formsWithName);
+    return formsWithName;
   },
 
   async getUsersByPage(pageNumber) {
@@ -152,19 +165,6 @@ const UserService = {
   // Tokens are returned
   async updateAccessToken(inputUserId, inputName, inputEmail) {
     try {
-      // const user = await Users.findOne({
-      //   where: {
-      //     id: inputUserId,
-      //     name: inputName,
-      //     email: inputEmail,
-      //   },
-      // });
-      // // checks if user exists
-      // if (!user) {
-      //   const error = new Error("Invalid Token.");
-      //   error.status = 403;
-      //   return error;
-      // }
       const userId = inputUserId;
       const name = inputName;
       const email = inputEmail;
@@ -209,7 +209,7 @@ const UserService = {
 
   async isAdmin(id) {
     try {
-      const admin = await User.findByPk(id);
+      const admin = await Users.findByPk(id);
       if (admin.admin) {
         return true;
       } else {
@@ -217,6 +217,21 @@ const UserService = {
         error.status = 403;
         throw error;
       }
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Used to see if an accont that is registerings email already exists within the database.
+  async emailExists(emailInput) {
+    try {
+      const email = Users.findOne({ where: { email: emailInput } });
+      if (!email) {
+        const error = new Error("An account with this email already exists");
+        error.status = 400;
+        return error;
+      }
+      return true;
     } catch (error) {
       throw error;
     }

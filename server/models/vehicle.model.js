@@ -12,10 +12,6 @@ const Vehicle = db.define(
       unique: true,
     },
 
-    vehicleName: {
-      type: DataTypes.STRING(64),
-    },
-
     vehicleTag: {
       type: DataTypes.STRING(6),
       allowNull: false,

@@ -43,7 +43,7 @@ function GetAllVehicles() {
 
   const handleUpdate = async () => {
     if (selectedVehicles.length === 0) {
-      alert("Please select at least one vehicle to update.");
+      alert("Please select at least one vehicle to Modify.");
       return;
     }
     for (const vehicleID of selectedVehicles) {

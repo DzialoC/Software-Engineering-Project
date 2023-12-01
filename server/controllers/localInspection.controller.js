@@ -8,9 +8,7 @@ const LocalInspectionController = {
       const userId = util.getUserIdByAccessToken(req);
       const inspectionData = req.body;
       inspectionData.userID = userId;
-      const inspectionLog = await LocalInspectionService.createLocalInspection(
-        inspectionData
-      );
+      await LocalInspectionService.createLocalInspection(inspectionData);
       res.status(201).json("Submittion Sucess!");
     } catch (error) {
       res.status(500).json({ message: error.message });

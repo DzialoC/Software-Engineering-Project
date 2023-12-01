@@ -2,29 +2,26 @@
 
 import { LOGOUT, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "./authActionTypes.js";
 
-export const logout = () => {
+export const logout = () => async(dispatch) => {
   console.log("It verks?");
-  return {
-    type: LOGOUT,
-  };
 };
 
 export const loginRequest = () => {
-  console.log("Works?");
+  console.log("Requesting Works?");
   return {
     type: LOGIN_REQUEST,
   };
 };
 
 export const loginSucess = () => {
-  console.log("Works?");
+  console.log("Login Works?");
   return {
     type: LOGIN_SUCCESS,
   };
 };
 
 export const loginFailure = () => {
-  console.log("Works?");
+  console.log("Login does not Works?");
   return {
     type: LOGIN_FAILURE,
   };

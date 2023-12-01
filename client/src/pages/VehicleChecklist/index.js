@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { InputField, Textarea, Checkbox } from "../../components/index.js";
 import axios from "axios";
+import './VehicleChecklist.css';
 
 const VehicleChecklist = () => {
   // State management for form inputs

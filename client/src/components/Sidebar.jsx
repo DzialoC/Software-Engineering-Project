@@ -1,12 +1,23 @@
 // Sidebar.jsx
-// import "./Sidebar.css";
+// eslint-disable-next-line
+import './Sidebar.css';
 import React, { useState } from "react";
 import CollapsibleMenu from "./CollapsibleMenu";
 
 const Sidebar = ({ onMenuClick }) => {
+  const [sidebarMinimized, setSidebarMinimized] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarMinimized((prev) => !prev);
+  };
+
   return (
-    <div className="sidebar">
-      <CollapsibleMenu title="Report Forms" onMenuClick={onMenuClick}>
+    <div className={`sidebar ${sidebarMinimized ? "minimized" : ""}`}>
+      <button className="toggle-button" onClick={toggleSidebar}>
+        {sidebarMinimized ? "Expand" : "Minimize"}
+      </button>
+      <div className="content">
+ <CollapsibleMenu title="Report Forms" onMenuClick={onMenuClick}>
         <div onClick={() => onMenuClick("localInspection")}>
           - Local Inspection
         </div>
@@ -27,8 +38,10 @@ const Sidebar = ({ onMenuClick }) => {
           - Damage Reports
         </div>
       </CollapsibleMenu>
+      </div>
     </div>
   );
 };
 
 export default Sidebar;
+

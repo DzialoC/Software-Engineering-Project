@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './LocalInspections.css';
+
 
 function LocalInspectionReports() {
   const [reports, setReports] = useState([]);
@@ -78,7 +80,7 @@ function LocalInspectionReports() {
             <th>Employee That File Entry</th>
             <th>Entry Date</th>
             <th>Mileage</th>
-            <td>Work Ticket</td>
+            <th>Work Ticket</th>
             <th>Person Releasing</th>
             <th>Body of Vehicle</th>
             <th>Tires Condition and Air Pressure</th>

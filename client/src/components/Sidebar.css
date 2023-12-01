@@ -1,0 +1,28 @@
+.sidebar {
+    /* Your existing styles */
+    transition: width 0.3s ease; /* Add a smooth transition effect for width changes */
+  }
+  
+  .sidebar.minimized {
+    width: 5px; /* Set a smaller width for the minimized state */
+  }
+  
+  .toggle-button {
+    position: absolute;
+    top: 94px; /* Adjust the top position as needed */
+    left: 0px; /* Adjust the right position as needed */
+    padding: 12px;
+    width: 73px;
+    color: white;
+    background-color: darkgray;
+    border-radius: 0px;
+    border: none;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;  
+    font-size: 15px;
+  }
+  
+  .content{
+    margin-top: 40px;
+  }

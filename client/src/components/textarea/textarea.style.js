@@ -11,7 +11,7 @@ export const StyledTextarea = styled.textarea`
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px; // Controls area around text
   font-size: 16px;
   resize: vertical;  // Allows user to resize the textarea vertically
   transition: border-color 0.3s;

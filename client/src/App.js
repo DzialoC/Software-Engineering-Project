@@ -7,6 +7,7 @@ import Contact from "./pages/Contact/index.js";
 import NotFound from "./pages/NotFound/index.js";
 import VehicleChecklist from "./pages/VehicleChecklist/index.js";
 import Dashboard from "./pages/Dashboard.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.js";
 
 import "./App.css";
 
@@ -20,9 +21,9 @@ function App() {
           <Route path="/Home" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/vehiclechecklist" element={<VehicleChecklist />} />
+          <Route path="/vehiclechecklist" element={<ProtectedRoute><VehicleChecklist /></ProtectedRoute>}/>
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>  
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

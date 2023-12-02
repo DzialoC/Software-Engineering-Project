@@ -95,7 +95,6 @@ function GetAllVehicles() {
         <thead>
           <tr>
             <th>Select</th>
-            <th>ID</th>
             <th>Vehicle Tag</th>
             <th>Vehicle Condition</th>
             <th>Vehicle Make</th>
@@ -120,7 +119,7 @@ function GetAllVehicles() {
                   value={vehicle.vehicleTag}
                   onChange={(e) =>
                     handleFieldChange(
-                      vehicle.vehicleID,
+                      vehicle.vehicleTag,
                       "vehicleTag",
                       e.target.value
                     )

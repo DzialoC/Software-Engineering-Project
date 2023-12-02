@@ -22,6 +22,24 @@ const VechicleService = {
       throw new Error("Vehicle ID already exists", error);
     }
   },
+  // returns boolean if vehicle exists used currently for inputforms verifying
+  // correct tag input
+  async vehicleVerification(inputVehicleTag) {
+    try {
+      const vehicle = Vehicle.findOne({
+        where: {
+          vehicleTag: inputVehicleTag,
+        },
+      });
+      if (vehicle) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
 
   // using Id return all vehicle information
   async getVehicleById(id) {

@@ -9,7 +9,6 @@ const VehicleForm = () => {
     vehicleMake: "",
     vehicleModel: "",
     vehicleYear: "",
-    lastUser: null,
   });
 
   // Handle form input changes
@@ -100,17 +99,6 @@ const VehicleForm = () => {
             value={formData.vehicleYear}
             onChange={handleInputChange}
             required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="lastUser">Last User:</label>
-          <input
-            type="number"
-            id="lastUser"
-            name="lastUser"
-            value={formData.lastUser}
-            onChange={handleInputChange}
           />
         </div>
 

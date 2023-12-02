@@ -8,13 +8,14 @@ const Vehicle = db.define(
     vehicleID: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
       unique: true,
     },
 
     vehicleTag: {
       type: DataTypes.STRING(6),
       allowNull: false,
+      primaryKey: true,
+      unique: true,
     },
 
     vehicleCondition: {

@@ -4,7 +4,7 @@ import User from "./user.model.js";
 
 const Equipment = db.define("Equipment", {
   equipmentID: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(32),
     allowNull: false,
     primaryKey: true,
     unique: true,
@@ -16,17 +16,8 @@ const Equipment = db.define("Equipment", {
   },
 
   equipmentCondition: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(16),
     allowNull: false,
-  },
-
-  lastUser: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User,
-      key: "id",
-    },
   },
 });
 

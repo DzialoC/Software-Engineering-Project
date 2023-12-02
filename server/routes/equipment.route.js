@@ -26,12 +26,12 @@ equipmentRouter.get(
   EquipmentController.getEquipmentByPage
 );
 equipmentRouter.put(
-  "/updateequipment/:id",
+  "/update/:id",
   isAuthenticated,
   EquipmentController.updateEquipment
 );
 equipmentRouter.delete(
-  "/deletebyid/:id",
+  "/remove/:id",
   isAuthenticated,
   EquipmentController.deleteEquipment
 );

@@ -37,7 +37,6 @@ const LocalInspection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const confirmation = await axios.post(
         "http://localhost:5000/local-inspections/",
         formData,
@@ -49,7 +48,8 @@ const LocalInspection = () => {
         alert("New Local Inspection entry success!");
       }
     } catch (error) {
-      alert(error);
+      // todo throw proper error message passed in, out
+      alert(error.message);
     }
   };
 

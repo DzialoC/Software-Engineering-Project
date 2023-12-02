@@ -33,13 +33,17 @@ const VechicleService = {
     }
   },
 
+  async getYearMakeModel(inputTag) {
+    const vehicle = await this.getVehicleByTag(inputTag);
+    const yearMakeModel = `${vehicle.vehicleYear} ${vehicle.vehicleMake} ${vehicle.vehicleModel}`;
+    console.log("yearMakeModel : ", yearMakeModel);
+    return yearMakeModel;
+  },
+
   async getVehicleByTag(tag) {
     try {
       const vehicle = await Vehicle.findOne({ where: { vehicleTag: tag } });
-      if (vehicle) {
-        return vehicle;
-      }
-      return error;
+      return vehicle;
     } catch (error) {
       throw error;
     }

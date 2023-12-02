@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './LocalInspections.css';
+
 
 function LocalInspectionReports() {
   const [reports, setReports] = useState([]);
+  let [selectedReport, setSelectedReport] = useState([]);
 
   useEffect(() => {
     async function fetchReports() {
@@ -22,6 +25,41 @@ function LocalInspectionReports() {
     fetchReports();
   }, []);
 
+  const handleCheckboxChange = (selectedID) => {
+    setSelectedReport((prevSelected) => {
+      if (prevSelected.includes(selectedID)) {
+        return prevSelected.filter((id) => id !== selectedID);
+      } else {
+        return [...prevSelected, selectedID];
+      }
+    });
+  };
+
+  const handleRemove = async () => {
+    if (selectedReport.length === 0) {
+      alert("Please select at least one Report to remove.");
+      return;
+    }
+    try {
+      for (const reportID of selectedReport) {
+        await axios.delete(
+          `http://localhost:5000/local-inspections/delete/${reportID}`,
+          { withCredentials: true }
+        );
+      }
+      alert("Selected vehicles removed successfully.");
+
+      setSelectedReport((prevReports) =>
+        prevReports.filter((reportID) => !selectedReport.includes(reportID))
+      );
+    } catch (error) {
+      console.error("Error removing Reports:", error);
+      alert("Error removing Reports.");
+    }
+    // Clear the selection
+    setSelectedReport([]);
+  };
+
   const renderBoolean = (value) => {
     if (typeof value === "boolean") {
       return value ? "Yes" : "No";
@@ -35,13 +73,14 @@ function LocalInspectionReports() {
       <table>
         <thead>
           <tr>
+            <th>Select</th>
             <th>Report ID</th>
             <th>Vehicle Tag</th>
             <th>Year Make Model</th>
             <th>Employee That File Entry</th>
             <th>Entry Date</th>
             <th>Mileage</th>
-            <td>Work Ticket</td>
+            <th>Work Ticket</th>
             <th>Person Releasing</th>
             <th>Body of Vehicle</th>
             <th>Tires Condition and Air Pressure</th>
@@ -63,12 +102,17 @@ function LocalInspectionReports() {
         <tbody>
           {reports.map((report) => (
             <tr key={report.id}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedReport.includes(report.id)}
+                  onChange={() => handleCheckboxChange(report.id)}
+                />
+              </td>
               <td>{report.id}</td>
               <td>{report.tag}</td>
-              {/* TODO */}
               <td>{report.vehicleInformation}</td>
               <td>{report.userName}</td>
-              {/* END  */}
               <td>{report.date}</td>
               <td>{report.mileage}</td>
               <td>{report.workTicket}</td>
@@ -92,6 +136,9 @@ function LocalInspectionReports() {
           ))}
         </tbody>
       </table>
+      <button onClick={handleRemove} className="button">
+        Remove Selected
+      </button>
     </div>
   );
 }

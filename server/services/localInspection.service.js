@@ -1,4 +1,6 @@
 import LocalInspection from "../models/localInspection.model.js";
+import VechicleService from "./vehicle.service.js";
+import UserService from "./user.service.js";
 
 const LocalInspectionService = {
   async createLocalInspection(inspectionData) {
@@ -33,7 +35,28 @@ const LocalInspectionService = {
       order: [["createdAt", "DESC"]],
       limit: amount,
     });
-    return recentInspections;
+    const logsWithAppendedVehicleInfo =
+      await this.getInspectionsWithVehicleInfo(recentInspections);
+    const logsWithAppendedName = await UserService.getUserNameFromIdAppendForms(
+      logsWithAppendedVehicleInfo
+    );
+    return logsWithAppendedName;
+  },
+
+  // appends vehicleInformation onto inspection logs past through
+  async getInspectionsWithVehicleInfo(recentInspections) {
+    const inspectionsWithVehicleInfo = await Promise.all(
+      recentInspections.map(async (inspection) => {
+        const vehicleInfo = await VechicleService.getYearMakeModel(
+          inspection.dataValues.tag
+        );
+        return {
+          ...inspection.dataValues,
+          vehicleInformation: vehicleInfo,
+        };
+      })
+    );
+    return inspectionsWithVehicleInfo;
   },
 
   async updateSpecifiedLog(id, inspectionData) {

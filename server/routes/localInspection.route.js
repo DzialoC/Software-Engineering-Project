@@ -26,12 +26,12 @@ localInspectionRouter.get(
   localInspectionController.getRecentSpecifiedLogs
 );
 localInspectionRouter.put(
-  "updatelogbyid/:id",
+  "/update/:id",
   isAuthenticated,
   localInspectionController.updateSpecifiedLog
 );
 localInspectionRouter.delete(
-  "deletelogbyid/:id",
+  "/delete/:id",
   isAuthenticated,
   localInspectionController.deleteSpecifiedLog
 );

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //trying redux
 import { loginSuccess } from "../../reducers/authSlice.js";
 import { useDispatch } from "react-redux";
+import './login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");

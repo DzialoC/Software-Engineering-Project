@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import './VehicleChecklist.css';
 
 export const FormRow = styled.div`
   display: flex;

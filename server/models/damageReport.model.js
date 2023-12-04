@@ -10,6 +10,7 @@ const DamageReport = db.define("DamageReport", {
     allowNull: false,
     primaryKey: true,
     unique: true,
+    autoIncrement: true,
   },
 
   description: {
@@ -26,16 +27,18 @@ const DamageReport = db.define("DamageReport", {
     },
   },
 
-  vehicleID: {
-    type: DataTypes.INTEGER,
+  vehicleTag: {
+    type: DataTypes.STRING(6),
+    allowNull: true,
     references: {
       model: Vehicle,
-      key: "vehicleID",
+      key: "vehicleTag",
     },
   },
 
   equipmentID: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(32),
+    allowNull: true,
     references: {
       model: Equipment,
       key: "equipmentID",

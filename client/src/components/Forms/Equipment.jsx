@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const EquipmentForm = () => {
@@ -6,7 +7,6 @@ const EquipmentForm = () => {
     equipmentID: "",
     equipmentCondition: "",
     equipmentDescription: "",
-    lastUser: "",
   });
 
   // Handle form input changes
@@ -16,50 +16,36 @@ const EquipmentForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send the form data to your server at localhost:5000/
-    fetch("http://localhost:5000/equipment/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server, if needed
-        console.log("Server response:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      const confirmation = await axios.post(
+        "http://localhost:5000/equipment/",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      if (confirmation) {
+        alert("New Equipment entry success!");
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
     <form className="form-content" onSubmit={handleSubmit}>
       <h1>New equipment form</h1>
       <div>
-        <label htmlFor="equipmentID">
-          Equipment ID Number: Needs to be unique.
-        </label>
+        <label htmlFor="equipmentID">Equipment ID:</label>
         <input
-          type="number"
+          type="text"
           id="equipmentID"
           name="equipmentID"
           value={formData.equipmentID}
           onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="equipmentCondition">Equipment Condition:</label>
-        <input
-          type="text"
-          id="equipmentCondition"
-          name="equipmentCondition"
-          value={formData.equipmentCondition}
-          onChange={handleInputChange}
+          maxLength={32}
           required
         />
       </div>
@@ -74,14 +60,13 @@ const EquipmentForm = () => {
           required
         />
       </div>
-
       <div>
-        <label htmlFor="lastUser">Last User:</label>
+        <label htmlFor="equipmentCondition">Equipment Condition:</label>
         <input
-          type="number"
-          id="lastUser"
-          name="lastUser"
-          value={formData.lastUser}
+          type="text"
+          id="equipmentCondition"
+          name="equipmentCondition"
+          value={formData.equipmentCondition}
           onChange={handleInputChange}
           required
         />

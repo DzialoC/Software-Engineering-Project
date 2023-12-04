@@ -149,7 +149,7 @@ const UserService = {
     const offset = (pageNumber - 1) * limit;
     try {
       const users = await Users.findAll({
-        attributes: ["name", "email", "user", "admin", "id"], // Returns only name, email, user, admin values
+        attributes: ["name", "email", "user", "admin", "id"],
         order: [["createdAt", "DESC"]],
         limit: limit,
         offset: offset,

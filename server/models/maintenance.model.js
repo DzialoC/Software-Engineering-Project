@@ -20,12 +20,12 @@ const Maintenance = db.define("Maintenance", {
     allowNull: false,
   },
 
-  vehicleID: {
-    type: DataTypes.INTEGER,
+  vehicleTag: {
+    type: DataTypes.STRING(6),
     allowNull: false,
     references: {
       model: Vehicle,
-      key: "vehicleID",
+      key: "vehicleTag",
     },
   },
 

@@ -5,7 +5,16 @@ import UserService from "./user.service.js";
 const LocalInspectionService = {
   async createLocalInspection(inspectionData) {
     try {
-      await LocalInspection.create(inspectionData);
+      const isReal = await VechicleService.vehicleVerification(
+        inspectionData.tag
+      );
+      if (isReal) {
+        await LocalInspection.create(inspectionData);
+      } else {
+        throw new Error(
+          "Incorrect Vehicle Tag, Verify tag. If tag is correct add new vehicle"
+        );
+      }
     } catch (error) {
       throw new Error("Inspection Log could not be created");
     }

@@ -7,9 +7,8 @@ const ResponsiveTable = ({ data }) => {
   // Define columns for react-table
   const columns = React.useMemo(
     () => [
-      { Header: "Column 1", accessor: "col1" }, // Replace with your actual data fields
+      { Header: "Column 1", accessor: "col1" },
       { Header: "Column 2", accessor: "col2" },
-      // Add as many columns as needed
     ],
     []
   );

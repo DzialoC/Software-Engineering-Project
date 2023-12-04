@@ -1,46 +1,22 @@
 import ClassBCDL from "../models/classBCDL.model.js";
+import VechicleService from "./vehicle.service.js";
 
 const ClassBCDLService = {
   async createClassBCDL(formInput) {
-    console.log("made it: ", battery);
-    const classBCDLInspection = await ClassBCDL.create({
-      vehicleID: vehicleID,
-      userID: parsedUserID,
-      comment: comment,
-      airHydraulicBrakeCheck: airHydraulicBrakeCheck,
-      parkingTrailerBrakeCheck: parkingTrailerBrakeCheck,
-      serviceBrakeCheck: serviceBrakeCheck,
-      lightingIndicators: lightingIndicators,
-      emergencyEquipment: emergencyEquipment,
-      windshieldTrafficMonitoringDevices: windshieldTrafficMonitoringDevices,
-      wipersWashers: wipersWashers,
-      heaterDefroster: heaterDefroster,
-      horns: horns,
-      allExternalLights: allExternalLights,
-      lensesFront: lensesFront,
-      fluidLevels: fluidLevels,
-      fluidAirLeaks: fluidAirLeaks,
-      steeringSystems: steeringSystems,
-      tires: tires,
-      rims: rims,
-      lugNuts: lugNuts,
-      springsAirBagsShocks: springsAirBagsShocks,
-      brakeLinesHosesLeaks: brakeLinesHosesLeaks,
-      brakeContaminates: brakeContaminates,
-      lensesReflectorsSide: lensesReflectorsSide,
-      trafficMonitoringDevicesSide: trafficMonitoringDevicesSide,
-      battery: battery,
-      fuelTanks: fuelTanks,
-      frames: frames,
-      lensesReflectorsRear: lensesReflectorsRear,
-    });
-    if (classBCDLInspection) {
-      console.log("it made it?");
+    try {
+      const isReal = await VechicleService.vehicleVerification(
+        formInput.vehicleTag
+      );
+      if (isReal) {
+        await ClassBCDL.create(formInput);
+      } else {
+        throw new Error(
+          "Incorrect Vehicle Tag, Verify tag. If tag is correct add new vehicle"
+        );
+      }
+    } catch (error) {
+      throw new error("Class B CDL log could not be created.");
     }
-    if (!classBCDLInspection) {
-      throw new Error("Class B CDL could not be created");
-    }
-    return classBCDLInspection;
   },
 
   async getAllClassBCDL() {
@@ -48,6 +24,7 @@ const ClassBCDLService = {
     if (!allForms) {
       throw new Error("No forms found");
     }
+    console.log(allForms);
     return allForms;
   },
 
@@ -65,7 +42,6 @@ const ClassBCDLService = {
     const classBCDLForms = await ClassBCDL.findAll({
       order: [["createdAt", "DESC"]],
       limit: limit,
-      offset: offset,
     });
     return classBCDLForms;
   },
@@ -75,7 +51,11 @@ const ClassBCDLService = {
       order: [["createdAt", "DESC"]],
       limit: amount,
     });
-    return recentClassBCDLForms;
+
+    console.log(recentClassBCDLForms, "recent class");
+    const strippedArray = recentClassBCDLForms.map((log) => log.dataValues);
+
+    return strippedArray;
   },
 
   async updateSpecified(id, formData) {

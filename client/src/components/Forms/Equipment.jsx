@@ -5,8 +5,8 @@ const EquipmentForm = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
     equipmentID: "",
-    equipmentCondition: "",
     equipmentDescription: "",
+    equipmentCondition: "",
   });
 
   // Handle form input changes

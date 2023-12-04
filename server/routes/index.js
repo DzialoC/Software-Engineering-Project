@@ -16,7 +16,7 @@ router.use("/damage-reports", damageReportRoutes);
 router.use("/class-bcdl", classBCDLRoutes);
 router.use("/equipment", equipmentRoutes);
 router.use("/local-inspections", localInspectionRoutes);
-router.use("/maintenance-logs", maintenanceRoutes);
+router.use("/maintenance", maintenanceRoutes);
 router.use("/vehicles", vehicleRoutes); // Mount the vehicle routes on the '/vehicles' path
 
 export default router;

@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import db from "../config/Database.js";
-import User from "./user.model.js";
 
 const Equipment = db.define("Equipment", {
   equipmentID: {

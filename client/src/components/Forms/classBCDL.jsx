@@ -3,8 +3,7 @@ import axios from "axios";
 
 function VehicleInspectionForm() {
   const [formData, setFormData] = useState({
-    vehicleID: "",
-    userID: null,
+    vehicleTag: "",
     comment: "",
     airHydraulicBrakeCheck: false,
     parkingTrailerBrakeCheck: false,
@@ -52,12 +51,10 @@ function VehicleInspectionForm() {
         { withCredentials: true }
       );
 
-      if (response.status === 200) {
-        console.log("Form data sent successfully", formData);
-        // Handle any success logic here
+      if (response) {
+        alert("New Local Inspection entry success!");
       } else {
-        console.error("Form data submission failed");
-        // Handle errors here
+        alert("Form data submission failed");
       }
     } catch (error) {
       console.error("An error occurred while sending the form data", error);
@@ -70,20 +67,15 @@ function VehicleInspectionForm() {
       <form className="form-content" onSubmit={handleSubmit}>
         <h1>Class B CDL Inspection Form</h1>
         <div>
-          <label htmlFor="vehicleID">Vehicle ID:</label>
+          <label htmlFor="vehicleTag">Vehicle Tag:</label>
           <input
-            type="number"
-            id="vehicleID"
-            name="vehicleID"
-            value={formData.vehicleID}
+            type="text"
+            id="vehicleTag"
+            name="vehicleTag"
+            value={formData.vehicleTag}
             onChange={handleChange}
             required
           />
-        </div>
-
-        <div>
-          <label htmlFor="userID">User ID:</label>
-          <input type="number" id="userID" name="userID" required />
         </div>
 
         <div>

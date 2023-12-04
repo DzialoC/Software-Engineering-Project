@@ -51,10 +51,11 @@ const VehicleController = {
   async updateVehicleById(req, res) {
     try {
       const id = req.params.id;
+      console.log("id", id);
+      console.log(req.body);
       const updateData = req.body;
       await VehicleService.updateVehicleById(id, updateData);
-      const updatedVehicle = await VehicleService.getVehicleById(id);
-      res.status(200).json(updatedVehicle);
+      res.status(200);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -4,10 +4,21 @@ const DamageReportController = {
   async createDamageReport(req, res) {
     try {
       const damageData = req.body;
-      const damageReport = await DamageReportService.createDamageReport(
-        damageData
-      );
-      res.status(201).json(damageReport);
+      const vehicleDamaged = damageData.vehicleID;
+      const equipmentDamaged = damageData.equipmentID;
+      if (vehicleDamaged && equipmentDamaged) {
+        throw error.message(
+          "Cannot insert vehicle and equipment. Only one area can be filled."
+        );
+      }
+      if (vehicleDamaged === true) {
+        DamageReportService.createVehicleDamageReport(damageData);
+      }
+
+      if (equipmentDamaged === true) {
+        DamageReportService.createEquipmentDamageReport(damageData);
+      }
+      res.status(201).json("Submittion Sucess!");
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -29,6 +40,9 @@ const DamageReportController = {
 
   async getTwentyRecentDamageReport(req, res) {
     try {
+      // const vehicleID = req.body.vehicleID
+      // const equipmentID = req.body.equipmentID
+      // if ( && req.body)
       const reports = await DamageReportService.getTwentyRecentDamageReport();
       res.status(200).json(reports);
     } catch (error) {

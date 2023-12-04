@@ -4,8 +4,11 @@ const EquipmentController = {
   async createEquipment(req, res) {
     try {
       const equipmentData = req.body;
-      const equipment = await EquipmentService.createEquipment(equipmentData);
-      res.status(201).json(equipment);
+      console.log(equipmentData);
+      const success = await EquipmentService.createEquipment(equipmentData);
+      if (success) {
+        res.status(201).json(success);
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -48,11 +51,8 @@ const EquipmentController = {
     try {
       const id = req.params.id;
       const equipmentData = req.body;
-      const updatedEquipment = await EquipmentService.updateEquipment(
-        id,
-        equipmentData
-      );
-      res.status(200).json(updatedEquipment);
+      await EquipmentService.updateEquipment(id, equipmentData);
+      res.status(200);
     } catch (error) {
       if (error.message === "Equipment not found") {
         res.status(404).json({ message: error.message });
@@ -65,7 +65,7 @@ const EquipmentController = {
   async deleteEquipment(req, res) {
     try {
       const id = req.params.id;
-      await EquipmentService.deleteEquipment(id);
+      await EquipmentService.deleteEquipmentById(id);
       res.status(200).json({ message: "Equipment successfully deleted" });
     } catch (error) {
       if (error.message === "Equipment not found") {

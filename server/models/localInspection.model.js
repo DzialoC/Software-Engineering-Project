@@ -7,8 +7,8 @@ const { DataTypes } = Sequelize;
 const LocalVehicleInspection = db.define(
   "LocalVehicleInspection",
   {
-    tag: {
-      type: DataTypes.STRING,
+    vehicleTag: {
+      type: DataTypes.STRING(6),
       allowNull: false,
     },
     date: {

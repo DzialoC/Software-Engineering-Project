@@ -41,6 +41,22 @@ const VechicleService = {
     }
   },
 
+  // appends vehicleInformation onto inspection logs past through
+  async getVehicleInfo(recentReports) {
+    const reportWithVehicleInfo = await Promise.all(
+      recentReports.map(async (report) => {
+        const vehicleInfo = await this.getYearMakeModel(
+          report.dataValues.vehicleTag
+        );
+        return {
+          ...report.dataValues,
+          vehicleInformation: vehicleInfo,
+        };
+      })
+    );
+    return reportWithVehicleInfo;
+  },
+
   // using Id return all vehicle information
   async getVehicleById(id) {
     try {
@@ -54,7 +70,6 @@ const VechicleService = {
   async getYearMakeModel(inputTag) {
     const vehicle = await this.getVehicleByTag(inputTag);
     const yearMakeModel = `${vehicle.vehicleYear} ${vehicle.vehicleMake} ${vehicle.vehicleModel}`;
-    console.log("yearMakeModel : ", yearMakeModel);
     return yearMakeModel;
   },
 

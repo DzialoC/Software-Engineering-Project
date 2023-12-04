@@ -1,5 +1,4 @@
 import LocalInspectionService from "../services/localInspection.service.js";
-
 import util from "../utils/util.js";
 
 const LocalInspectionController = {

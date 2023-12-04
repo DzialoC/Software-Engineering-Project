@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './Overview.css';
 
 function GetAllVehicles() {
   let [vehicles, setVehicles] = useState([]);
@@ -12,12 +11,15 @@ function GetAllVehicles() {
         const response = await axios.get("http://localhost:5000/vehicles/", {
           withCredentials: true,
         });
-        setVehicles(response.data);
+        const dataWithUniqueId = response.data.map((item, index) => ({
+          ...item,
+          uniqueKey: `equipment-${index}-${item.equipmentID}`,
+        }));
+        setVehicles(dataWithUniqueId);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     }
-
     fetchVehicles();
   }, []);
 
@@ -44,7 +46,7 @@ function GetAllVehicles() {
 
   const handleUpdate = async () => {
     if (selectedVehicles.length === 0) {
-      alert("Please select at least one vehicle to Modify.");
+      alert("Please select at least one vehicle to modify.");
       return;
     }
     for (const vehicleID of selectedVehicles) {
@@ -106,7 +108,7 @@ function GetAllVehicles() {
         </thead>
         <tbody>
           {vehicles.map((vehicle) => (
-            <tr key={vehicle.vehicleID}>
+            <tr key={vehicle.uniqueKey}>
               <td>
                 <input
                   type="checkbox"
@@ -115,17 +117,7 @@ function GetAllVehicles() {
                 />
               </td>
               <td>
-                <input
-                  type="text"
-                  value={vehicle.vehicleTag}
-                  onChange={(e) =>
-                    handleFieldChange(
-                      vehicle.vehicleTag,
-                      "vehicleTag",
-                      e.target.value
-                    )
-                  }
-                />
+                <input type="text" readonly value={vehicle.vehicleTag} />
               </td>
               <td>
                 <input

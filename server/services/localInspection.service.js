@@ -6,7 +6,7 @@ const LocalInspectionService = {
   async createLocalInspection(inspectionData) {
     try {
       const isReal = await VechicleService.vehicleVerification(
-        inspectionData.tag
+        inspectionData.vehicleTag
       );
       if (isReal) {
         await LocalInspection.create(inspectionData);
@@ -44,28 +44,15 @@ const LocalInspectionService = {
       order: [["createdAt", "DESC"]],
       limit: amount,
     });
-    const logsWithAppendedVehicleInfo =
-      await this.getInspectionsWithVehicleInfo(recentInspections);
+    console.log(recentInspections);
+    const logsWithAppendedVehicleInfo = await VechicleService.getVehicleInfo(
+      recentInspections
+    );
+    console.log(logsWithAppendedVehicleInfo, "appended");
     const logsWithAppendedName = await UserService.getUserNameFromIdAppendForms(
       logsWithAppendedVehicleInfo
     );
     return logsWithAppendedName;
-  },
-
-  // appends vehicleInformation onto inspection logs past through
-  async getInspectionsWithVehicleInfo(recentInspections) {
-    const inspectionsWithVehicleInfo = await Promise.all(
-      recentInspections.map(async (inspection) => {
-        const vehicleInfo = await VechicleService.getYearMakeModel(
-          inspection.dataValues.tag
-        );
-        return {
-          ...inspection.dataValues,
-          vehicleInformation: vehicleInfo,
-        };
-      })
-    );
-    return inspectionsWithVehicleInfo;
   },
 
   async updateSpecifiedLog(id, inspectionData) {

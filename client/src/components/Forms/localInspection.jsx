@@ -4,7 +4,7 @@ import axios from "axios";
 const LocalInspection = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
-    tag: "",
+    vehicleTag: "",
     date: "",
     mileage: "",
     workTicket: "",
@@ -59,12 +59,12 @@ const LocalInspection = () => {
         <h1>Local Vehicle Inspection</h1>
 
         <div>
-          <label htmlFor="tag">Vehicle Tag:</label>
+          <label htmlFor="vehicleTag">Vehicle Tag:</label>
           <input
             type="text"
-            id="tag"
-            name="tag"
-            value={formData.tag}
+            id="vehicleTag"
+            name="vehicleTag"
+            value={formData.vehicleTag}
             onChange={handleInputChange}
             required
           />

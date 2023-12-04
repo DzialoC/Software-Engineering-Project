@@ -3,12 +3,12 @@ import db from "../config/Database.js";
 import User from "./user.model.js";
 import Vehicle from "./vehicle.model.js";
 
-const Maintenance = db.define("Maintenance", {
+const MaintenanceVehicle = db.define("MaintenanceVehicle", {
   maintenanceID: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     primaryKey: true,
     unique: true,
+    autoIncrement: true,
   },
 
   maintenanceDescription: {
@@ -51,4 +51,4 @@ const Maintenance = db.define("Maintenance", {
   await db.sync({});
 })();
 
-export default Maintenance;
+export default MaintenanceVehicle;

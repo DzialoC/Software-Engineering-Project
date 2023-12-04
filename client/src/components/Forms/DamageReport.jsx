@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const DamageReportForm = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
     description: "",
     userID: "",
-    vehicleID: "",
+    vehicleTag: "",
     equipmentID: "",
     reportDate: "",
-    negligent: false,
+    negligent: null,
     pictures: null,
   });
 
@@ -21,32 +22,23 @@ const DamageReportForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send the form data to your server at localhost:5000/
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === "pictures") {
-        value.forEach((file) => {
-          formDataToSend.append(key, file);
-        });
-      } else {
-        formDataToSend.append(key, value);
-      }
-    });
 
-    fetch("http://localhost:5000/damage-reports/", {
-      method: "POST",
-      body: formDataToSend,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server, if needed
-        console.log("Server response:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      const confirmation = await axios.post(
+        "http://localhost:5000/damage-reports/",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      if (confirmation) {
+        alert("Damage Report Success");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -66,24 +58,23 @@ const DamageReportForm = () => {
         </div>
 
         <div>
-          <label htmlFor="userID">User ID:</label>
+          <label htmlFor="userID">Employee at fault ID:</label>
           <input
             type="number"
             id="userID"
             name="userID"
             value={formData.userID}
             onChange={handleInputChange}
-            required
           />
         </div>
 
         <div>
-          <label htmlFor="vehicleID">Vehicle ID:</label>
+          <label htmlFor="vehicleTag">Vehicle Tag:</label>
           <input
-            type="number"
-            id="vehicleID"
-            name="vehicleID"
-            value={formData.vehicleID}
+            type="text"
+            id="vehicleTag"
+            name="vehicleTag"
+            value={formData.vehicleTag}
             onChange={handleInputChange}
           />
         </div>

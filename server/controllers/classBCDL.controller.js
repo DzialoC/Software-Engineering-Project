@@ -1,10 +1,12 @@
 import ClassBCDLService from "../services/classBCDL.service.js";
+import util from "../utils/util.js";
 
 const ClassBCDLController = {
   async createClassBCDL(req, res) {
     try {
+      const userId = util.getUserIdByAccessToken(req);
       const formInput = req.body;
-      console.log("Package: ", formInput);
+      formInput.userID = userId;
       const classBCDLInspection = await ClassBCDLService.createClassBCDL(
         formInput
       );
@@ -52,9 +54,10 @@ const ClassBCDLController = {
 
   async getRecentAmountClassBForms(req, res) {
     try {
-      const amount = parseInt(req.params.amount);
+      const amount = 50;
       const recentClassBCDLForms =
         await ClassBCDLService.getRecentSpecifiedClassBForms(amount);
+
       res.status(200).json(recentClassBCDLForms);
     } catch (error) {
       res.status(500).json({ message: error.message });

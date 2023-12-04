@@ -16,11 +16,6 @@ equipmentRouter.get(
   EquipmentController.getEquipmentById
 );
 equipmentRouter.get(
-  "/getallequipment/",
-  isAuthenticated,
-  EquipmentController.getAllEquipment
-);
-equipmentRouter.get(
   "/page/:page",
   isAuthenticated,
   EquipmentController.getEquipmentByPage
@@ -31,7 +26,7 @@ equipmentRouter.put(
   EquipmentController.updateEquipment
 );
 equipmentRouter.delete(
-  "/remove/:id",
+  "/delete/:id",
   isAuthenticated,
   EquipmentController.deleteEquipment
 );

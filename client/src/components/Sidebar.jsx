@@ -1,6 +1,3 @@
-// Sidebar.jsx
-// eslint-disable-next-line
-// import './Sidebar.css';
 import React, { useState } from "react";
 import CollapsibleMenu from "./CollapsibleMenu";
 
@@ -25,10 +22,11 @@ const Sidebar = ({ onMenuClick }) => {
           <div onClick={() => onMenuClick("Equipment")}>- New Equipment</div>
           <div onClick={() => onMenuClick("ClassBCDL")}>- Class B CDL</div>
           <div onClick={() => onMenuClick("DamageReport")}>- Damage Report</div>
+          <div onClick={() => onMenuClick("Maintenance")}>- Maintenance</div>
         </CollapsibleMenu>
         <CollapsibleMenu title="Overview" onMenuClick={onMenuClick}>
-          <div onClick={() => onMenuClick("LocalInsepctionTable")}>
-            - Local Insepctions
+          <div onClick={() => onMenuClick("LocalInspectionTable")}>
+            - Local Inspections
           </div>
           <div onClick={() => onMenuClick("VehicleTable")}>- Vehicles</div>
           <div onClick={() => onMenuClick("EquipmentTable")}>- Equipment</div>
@@ -36,6 +34,9 @@ const Sidebar = ({ onMenuClick }) => {
           <div onClick={() => onMenuClick("EmployeesTable")}>- Employees</div>
           <div onClick={() => onMenuClick("DamageReportTable")}>
             - Damage Reports
+          </div>
+          <div onClick={() => onMenuClick("MaintenanceReportTable")}>
+            - Maintenance
           </div>
         </CollapsibleMenu>
       </div>

@@ -6,12 +6,12 @@ import User from "./user.model.js";
 import Vehicle from "./vehicle.model.js";
 
 const ClassBCDL = db.define("ClassBCDL", {
-  vehicleID: {
-    type: DataTypes.INTEGER,
+  vehicleTag: {
+    type: DataTypes.STRING(6),
     allowNull: false,
     references: {
       model: Vehicle,
-      key: "vehicleID",
+      key: "vehicleTag",
     },
   },
   userID: {

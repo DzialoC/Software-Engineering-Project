@@ -8,7 +8,7 @@ const damageReportRouter = express.Router();
 // Define damage report routes and apply the token verification middleware
 damageReportRouter
   .route("/")
-  .get(isAuthenticated, DamageReportController.getDamageReportByPage)
+  .get(isAuthenticated, DamageReportController.getTwentyRecentDamageReport)
   .post(isAuthenticated, DamageReportController.createDamageReport);
 damageReportRouter.get(
   "/page/:pageNumber",
@@ -16,17 +16,17 @@ damageReportRouter.get(
   DamageReportController.getDamageReportByPage
 );
 damageReportRouter.get(
-  "/getreportbyid/:id",
+  "/get/:id",
   isAuthenticated,
   DamageReportController.getDamageReportById
 );
 damageReportRouter.put(
-  "/updatereportbyid/:id",
+  "/update/:id",
   isAuthenticated,
   DamageReportController.updateDamageReportById
 );
 damageReportRouter.delete(
-  "/deletereportbyid/:id",
+  "/delete/:id",
   isAuthenticated,
   DamageReportController.deleteDamageReport
 );

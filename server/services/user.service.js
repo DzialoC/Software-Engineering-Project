@@ -140,7 +140,6 @@ const UserService = {
         };
       })
     );
-    console.log("formsWithName, ", formsWithName);
     return formsWithName;
   },
 

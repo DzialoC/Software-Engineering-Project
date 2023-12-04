@@ -15,8 +15,8 @@ const Maintenance = React.lazy(() =>
 );
 const Vehicle = React.lazy(() => import("../components/Forms/Vehicle.jsx"));
 
-const LocalInsepctionTable = React.lazy(() =>
-  import("../components/Tables/LocalInsepction.jsx")
+const LocalInspectionTable = React.lazy(() =>
+  import("../components/Tables/LocalInspection.jsx")
 );
 const DamageReportTable = React.lazy(() =>
   import("../components/Tables/DamageReport.jsx")
@@ -33,6 +33,10 @@ const ClassBCDLTable = React.lazy(() =>
 
 const EmployeesTable = React.lazy(() =>
   import("../components/Tables/Employees.jsx")
+);
+
+const MaintenanceReportTable = React.lazy(() =>
+  import("../components/Tables/Maintenance.jsx")
 );
 
 const Dashboard = () => {
@@ -62,14 +66,16 @@ const Dashboard = () => {
         return <ClassBCDLTable />;
       case "DamageReportTable":
         return <DamageReportTable />;
-      case "LocalInsepctionTable":
-        return <LocalInsepctionTable />;
+      case "LocalInspectionTable":
+        return <LocalInspectionTable />;
       case "EquipmentTable":
         return <EquipmentTable />;
       case "VehicleTable":
         return <VehicleTable />;
       case "EmployeesTable":
         return <EmployeesTable />;
+      case "MaintenanceReportTable":
+        return <MaintenanceReportTable />;
       default:
         return <ClassBCDL />;
     }

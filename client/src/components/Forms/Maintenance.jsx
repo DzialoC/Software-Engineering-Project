@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const MaintenanceForm = () => {
   // Define the initial state to store form input values
   const [formData, setFormData] = useState({
     maintenanceDescription: "",
     maintenanceDate: "",
-    vehicleID: "",
-    userID: "",
+    vehicleTag: "",
+    equipmentID: "",
     cost: "",
     partsReplaced: "",
   });
@@ -17,24 +18,28 @@ const MaintenanceForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/maintenance", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server, if needed
-        console.log("Server response:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      console.log(formData);
+      const confirmation = await axios.post(
+        "http://localhost:5000/maintenance/",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      if (confirmation) {
+        alert("New maintenance entry success!");
+      }
+    } catch (error) {
+      let errorMessage = "An error occurred. Please try again.";
+      if (error.response && error.response.data) {
+        // If the error has a response and the response has a data property
+        errorMessage += " Details: " + error.response.data;
+      }
+      alert(errorMessage);
+    }
   };
 
   return (
@@ -51,6 +56,7 @@ const MaintenanceForm = () => {
             name="maintenanceDescription"
             value={formData.maintenanceDescription}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -67,26 +73,24 @@ const MaintenanceForm = () => {
         </div>
 
         <div>
-          <label htmlFor="vehicleID">Vehicle ID:</label>
+          <label htmlFor="vehicleTag">Vehicle Tag:</label>
           <input
-            type="number"
-            id="vehicleID"
-            name="vehicleID"
-            value={formData.vehicleID}
+            type="text"
+            id="vehicleTag"
+            name="vehicleTag"
+            value={formData.vehicleTag}
             onChange={handleInputChange}
-            required
           />
         </div>
 
         <div>
-          <label htmlFor="userID">User ID:</label>
+          <label htmlFor="equipmentID">Equipment ID:</label>
           <input
-            type="number"
-            id="userID"
-            name="userID"
-            value={formData.userID}
+            type="text"
+            id="equipmentID"
+            name="equipmentID"
+            value={formData.equipmentID}
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -98,7 +102,6 @@ const MaintenanceForm = () => {
             name="cost"
             value={formData.cost}
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -110,6 +113,7 @@ const MaintenanceForm = () => {
             name="partsReplaced"
             value={formData.partsReplaced}
             onChange={handleInputChange}
+            required
           />
         </div>
 

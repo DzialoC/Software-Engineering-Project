@@ -1,12 +1,27 @@
-import DamageReport from "../models/damageReport.model.js";
+import DamageReportEquipment from "../models/damageReportEquipment.model.js";
+import DamageReportVehicle from "../models/damageReportVehicle.model.js";
 
 const DamageReportService = {
-  async createDamageReport(damageData) {
-    const damageReport = await DamageReport.create(damageData);
-    if (!damageReport) {
-      throw new Error("Damage Report could not be created");
+  async createVehicleDamageReport(damageData) {
+    try {
+      const damageReport = await DamageReportVehicle.create(damageData);
+      if (!damageReport) {
+        throw new Error("Damage Report could not be created");
+      }
+    } catch (error) {
+      throw error;
     }
-    return damageReport;
+  },
+
+  async createEquipmentDamageReport(damageData) {
+    try {
+      const damageReport = await DamageReportEquipment.create(damageData);
+      if (!damageReport) {
+        throw new Error("Damage Report could not be created");
+      }
+    } catch (error) {
+      throw error;
+    }
   },
 
   async getDamageReportById(id) {

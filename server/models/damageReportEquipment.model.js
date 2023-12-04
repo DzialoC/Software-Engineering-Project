@@ -1,10 +1,9 @@
 import { DataTypes } from "sequelize";
 import db from "../config/Database.js";
 import User from "./user.model.js";
-import Vehicle from "./vehicle.model.js";
 import Equipment from "./equipment.model.js";
 
-const DamageReport = db.define("DamageReport", {
+const DamageReportEquipment = db.define("DamageReportEquipment", {
   reportID: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -20,19 +19,10 @@ const DamageReport = db.define("DamageReport", {
 
   userID: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: User,
       key: "id",
-    },
-  },
-
-  vehicleTag: {
-    type: DataTypes.STRING(6),
-    allowNull: true,
-    references: {
-      model: Vehicle,
-      key: "vehicleTag",
     },
   },
 
@@ -66,4 +56,4 @@ const DamageReport = db.define("DamageReport", {
   await db.sync({});
 })();
 
-export default DamageReport;
+export default DamageReportEquipment;

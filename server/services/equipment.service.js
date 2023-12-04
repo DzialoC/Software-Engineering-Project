@@ -2,8 +2,30 @@ import Equipment from "../models/equipment.model.js";
 
 const EquipmentService = {
   async createEquipment(equipmentData) {
-    const equipment = await Equipment.create(equipmentData);
-    return equipment;
+    try {
+      console.log(equipmentData);
+      await Equipment.create(equipmentData);
+      return true;
+    } catch (error) {
+      throw new Error("Equipment ID already exists", error);
+    }
+  },
+
+  async equipmentVerification(inputEquipmentID) {
+    try {
+      const equipment = Equipment.findOne({
+        where: {
+          equipmentID: inputEquipmentID,
+        },
+      });
+      if (equipment) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      throw error;
+    }
   },
 
   async getEquipmentById(id) {
@@ -31,21 +53,19 @@ const EquipmentService = {
   },
 
   async updateEquipment(id, equipmentData) {
-    const [updated] = await Equipment.update(equipmentData, {
-      where: { id: id },
+    await Equipment.update(equipmentData, {
+      where: { equipmentID: id },
     });
     if (!updated) {
       throw new Error("Equipment not found");
     }
-    return await this.getEquipmentById(id);
   },
 
-  async deleteEquipment(id) {
+  async deleteEquipmentById(id) {
     const equipment = await this.getEquipmentById(id);
-    if (!equipment) {
-      throw new Error("Equipment not found");
+    if (equipment) {
+      await equipment.destroy(id);
     }
-    await equipment.destroy();
   },
 };
 

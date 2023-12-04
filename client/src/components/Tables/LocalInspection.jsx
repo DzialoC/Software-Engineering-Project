@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './LocalInspections.css';
-
 
 function LocalInspectionReports() {
   const [reports, setReports] = useState([]);

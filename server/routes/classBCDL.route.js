@@ -8,7 +8,7 @@ const classBCDLRouter = express.Router();
 // Define classBCDL routes and apply the token verification middleware
 classBCDLRouter
   .route("/")
-  .get(isAuthenticated, ClassBCDLController.getClassCDLByPage)
+  .get(isAuthenticated, ClassBCDLController.getRecentAmountClassBForms)
   .post(isAuthenticated, ClassBCDLController.createClassBCDL);
 classBCDLRouter.get(
   "/id/:id",
@@ -31,7 +31,7 @@ classBCDLRouter.put(
   ClassBCDLController.updateSpecified
 );
 classBCDLRouter.delete(
-  "/deletebyid/:id",
+  "/delete/:id",
   isAuthenticated,
   ClassBCDLController.deleteClassBForm
 );

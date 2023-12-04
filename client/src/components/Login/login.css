@@ -2,8 +2,12 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0056b3;
     color: #333;
+    background-image: url(https://cdn.discordapp.com/attachments/1153701878593486871/1181275650833776661/IMG_9430.jpg?ex=658077ae&is=656e02ae&hm=2adc40de85c41f869106caae278fadd410bfc66a4973b32a3f95000198c72584&); /* Specify the path to your background image */
+    background-size:120%; /* Ensure the background image covers the entire container */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */  
+    background-position: center 637px; /* Move the background image to the bottom center */
+    background-color:#f4f4f4;
   }
   
   .login-container {

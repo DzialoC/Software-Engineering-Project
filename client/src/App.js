@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Header, Login, Register } from "./components/index.js";
 import Admin from "./pages/Admin/index.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -8,10 +8,17 @@ import NotFound from "./pages/NotFound/index.js";
 import VehicleChecklist from "./pages/VehicleChecklist/index.js";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.js";
-
+import { useDispatch } from "react-redux";
+import { verifyToken } from "./reducers/authSlice.js";
 import "./App.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(verifyToken());
+  }, [dispatch]);
+
   return (
     <Router>
       <div className="App">

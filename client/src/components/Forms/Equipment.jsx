@@ -7,6 +7,7 @@ const EquipmentForm = () => {
     equipmentID: "",
     equipmentDescription: "",
     equipmentCondition: "",
+    underMaintenance: false,
   });
 
   // Handle form input changes
@@ -69,6 +70,17 @@ const EquipmentForm = () => {
           value={formData.equipmentCondition}
           onChange={handleInputChange}
           required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="underMaintenance">Under Maintenance:</label>
+        <input
+          type="checkbox"
+          id="underMaintenance"
+          name="underMaintenance"
+          value={formData.underMaintenance}
+          onChange={handleInputChange}
         />
       </div>
 

@@ -107,6 +107,37 @@ p {
   margin-top: -30px;
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9rem;
+  background-color: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  padding-right: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table thead th {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
 
 
 /* Buttons */
@@ -168,18 +199,6 @@ p {
 @media (max-width: 768px) {
   .container {
     padding: 0 10px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-
-  h3 {
-    font-size: 1rem;
   }
 }
 

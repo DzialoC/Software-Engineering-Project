@@ -1,16 +1,16 @@
 import EquipmentService from "../services/equipment.service.js";
+import util from "../utils/util.js";
 
 const EquipmentController = {
   async createEquipment(req, res) {
     try {
       const equipmentData = req.body;
-      console.log(equipmentData);
       const success = await EquipmentService.createEquipment(equipmentData);
       if (success) {
         res.status(201).json(success);
       }
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.sendStatus(500).json({ message: error.message });
     }
   },
 
@@ -47,11 +47,57 @@ const EquipmentController = {
     }
   },
 
+  async getCSVFromSpecifiedDate(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await EquipmentService.getCSVFromSpecifiedDate(
+        formattedStartDate,
+        formattedEndDate
+      );
+      res.setHeader("Content-Type", "application/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=equipment_report.csv"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getPDFFromSpecifiedDate(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await EquipmentService.getPDFFromSpecifiedDate(
+        formattedStartDate,
+        formattedEndDate
+      );
+      // Set the response headers to indicate that you're sending a PDF file
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=equipment_report.pdf"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
   async updateEquipment(req, res) {
     try {
-      const id = req.params.id;
       const equipmentData = req.body;
-      await EquipmentService.updateEquipment(id, equipmentData);
+      await EquipmentService.updateEquipment(equipmentData);
       res.status(200);
     } catch (error) {
       if (error.message === "Equipment not found") {

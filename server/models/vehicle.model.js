@@ -37,7 +37,9 @@ const Vehicle = db.define(
       type: DataTypes.INTEGER(4),
       allowNull: false,
     },
-
+    underMaintenance: {
+      type: DataTypes.BOOLEAN,
+    },
     lastUser: {
       type: DataTypes.INTEGER,
       allowNull: true,

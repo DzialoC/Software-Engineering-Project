@@ -11,11 +11,7 @@ function GetAllVehicles() {
         const response = await axios.get("http://localhost:5000/vehicles/", {
           withCredentials: true,
         });
-        const dataWithUniqueId = response.data.map((item, index) => ({
-          ...item,
-          uniqueKey: `equipment-${index}-${item.equipmentID}`,
-        }));
-        setVehicles(dataWithUniqueId);
+        setVehicles(response.data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -69,7 +65,6 @@ function GetAllVehicles() {
       alert("Please select at least one vehicle to remove.");
       return;
     }
-
     try {
       for (const vehicleID of selectedVehicles) {
         await axios.delete(
@@ -78,7 +73,6 @@ function GetAllVehicles() {
         );
       }
       alert("Selected vehicles removed successfully.");
-
       setVehicles((prevVehicles) =>
         prevVehicles.filter((v) => !selectedVehicles.includes(v.vehicleID))
       );
@@ -94,7 +88,7 @@ function GetAllVehicles() {
   return (
     <div>
       <h2>All Vehicles</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Select</th>
@@ -103,12 +97,13 @@ function GetAllVehicles() {
             <th>Vehicle Make</th>
             <th>Vehicle Model</th>
             <th>Vehicle Year</th>
+            <th>Under Maintenance</th>
             <th>Last User</th>
           </tr>
         </thead>
         <tbody>
           {vehicles.map((vehicle) => (
-            <tr key={vehicle.uniqueKey}>
+            <tr key={vehicle.id}>
               <td>
                 <input
                   type="checkbox"
@@ -117,7 +112,7 @@ function GetAllVehicles() {
                 />
               </td>
               <td>
-                <input type="text" readonly value={vehicle.vehicleTag} />
+                <input type="text" readOnly value={vehicle.vehicleTag} />
               </td>
               <td>
                 <input
@@ -175,6 +170,20 @@ function GetAllVehicles() {
 
               <td>
                 <input
+                  type="checkbox"
+                  checked={vehicle.underMaintenance}
+                  onChange={() =>
+                    handleFieldChange(
+                      vehicle.vehicleID,
+                      "underMaintenance",
+                      !vehicle.underMaintenance
+                    )
+                  }
+                />
+              </td>
+
+              <td>
+                <input
                   type="text"
                   value={vehicle.lastUser}
                   onChange={(e) =>
@@ -186,6 +195,7 @@ function GetAllVehicles() {
                   }
                 />
               </td>
+              <td>{vehicle.createdAt}</td>
             </tr>
           ))}
         </tbody>

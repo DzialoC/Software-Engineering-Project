@@ -1,4 +1,5 @@
 import UserService from "../services/user.service.js";
+import util from "../utils/util.js";
 
 export const Register = async (req, res) => {
   const { name, email, password, confPassword } = req.body;
@@ -86,11 +87,31 @@ export const Logout = async (req, res) => {
 
 export const GetAllUsers = async (req, res) => {
   try {
-    const users = await UserService.getAllUsers();
-    return res.status(200).json(users);
+    const isAdmin = await util.isAdmin(req);
+    if (isAdmin) {
+      const users = await UserService.getAllUsers();
+      return res.status(200).json(users);
+    } else {
+      return res.sendStatus(403);
+    }
   } catch (error) {
     console.error("Error fetching users:", error);
     return res.sendStatus(500);
+  }
+};
+
+export const UpdateUserById = async (req, res) => {
+  try {
+    const user = req.body;
+    console.log(user);
+    const isAdmin = await util.isAdmin(req);
+
+    if (isAdmin) {
+      await UserService.updateUser(user);
+      return res.status(200);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -135,20 +156,6 @@ export const GetUsersByPage = async (req, res) => {
     return res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users by page:", error);
-    return res.sendStatus(500);
-  }
-};
-
-export const UpdateUserById = async (req, res) => {
-  const { id, updateData } = req.body; //double check
-  try {
-    const user = await UserService.updateUserById(id, updateData);
-    if (!user) {
-      return res.sendStatus(204);
-    }
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error("Error updating user by id:", error);
     return res.sendStatus(500);
   }
 };

@@ -11,6 +11,13 @@ function MaintenanceReportTable() {
         const response = await axios.get("http://localhost:5000/maintenance/", {
           withCredentials: true,
         });
+
+        const upcoming = await axios.get(
+          "http://localhost:5000/maintenance/upcoming/",
+          {
+            withCredentials: true,
+          }
+        );
         setMaintenanceRecords(response.data);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -60,19 +67,20 @@ function MaintenanceReportTable() {
   return (
     <div>
       <h1>Latest Maintenance Reports</h1>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             {/* <th>Select</th> */}
             <th>Maintenance Description</th>
             <th>Maintenance Date</th>
+            <th>Next Maintenance Date</th>
+            <th>Next Maintenance Work</th>
             <th>Vehicle Tag</th>
             <th>Vehicle Info</th>
             <th>Equipment ID</th>
             <th>Cost</th>
             <th>Parts Replaced</th>
             <th>Employee That File Entry</th>
-            <th>Year Make Model</th>
           </tr>
         </thead>
         <tbody>
@@ -87,8 +95,10 @@ function MaintenanceReportTable() {
               </td> */}
               <td>{record.maintenanceDescription}</td>
               <td>{record.maintenanceDate}</td>
+              <td>{record.nextMaintenanceDate}</td>
+              <td>{record.nextMaintenanceWork}</td>
               <td>{record.vehicleTag}</td>
-              <td>{record.vehicleName}</td>
+              <td>{record.vehicleInformation}</td>
               <td>{record.equipmentID}</td>
               <td>{record.cost}</td>
               <td>{record.partsReplaced}</td>

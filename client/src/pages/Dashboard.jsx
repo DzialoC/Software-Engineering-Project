@@ -1,10 +1,18 @@
 import React, { useState, Suspense } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-// import "./App1.css";
 
+const MaintenanceCalendar = React.lazy(() =>
+  import("../components/Tables/Calander.jsx")
+);
+const GenerateReport = React.lazy(() =>
+  import("../components/Tables/GenerateReport.jsx")
+);
 const ClassBCDL = React.lazy(() => import("../components/Forms/classBCDL.jsx"));
-const DamageReport = React.lazy(() =>
-  import("../components/Forms/DamageReport.jsx")
+const VehicleDamageReport = React.lazy(() =>
+  import("../components/Forms/VehicleDamageReport.jsx")
+);
+const EquipmentDamageReport = React.lazy(() =>
+  import("../components/Forms/EquipmentDamageReport.jsx")
 );
 const Equipment = React.lazy(() => import("../components/Forms/Equipment.jsx"));
 const LocalInspection = React.lazy(() =>
@@ -18,8 +26,11 @@ const Vehicle = React.lazy(() => import("../components/Forms/Vehicle.jsx"));
 const LocalInspectionTable = React.lazy(() =>
   import("../components/Tables/LocalInspection.jsx")
 );
-const DamageReportTable = React.lazy(() =>
-  import("../components/Tables/DamageReport.jsx")
+const DamageReportEquipmentTable = React.lazy(() =>
+  import("../components/Tables/DamageReportEquipment.jsx")
+);
+const DamageReportVehicleTable = React.lazy(() =>
+  import("../components/Tables/DamageReportVehicle.jsx")
 );
 const EquipmentTable = React.lazy(() =>
   import("../components/Tables/Equipment.jsx")
@@ -52,8 +63,14 @@ const Dashboard = () => {
     switch (currentComponent) {
       case "ClassBCDL":
         return <ClassBCDL />;
-      case "DamageReport":
-        return <DamageReport />;
+      case "GenerateReport":
+        return <GenerateReport />;
+      case "MaintenanceCalendar":
+        return <MaintenanceCalendar />;
+      case "VehicleDamageReport":
+        return <VehicleDamageReport />;
+      case "EquipmentDamageReport":
+        return <EquipmentDamageReport />;
       case "Equipment":
         return <Equipment />;
       case "localInspection":
@@ -64,8 +81,10 @@ const Dashboard = () => {
         return <Vehicle />;
       case "ClassBCDLTable":
         return <ClassBCDLTable />;
-      case "DamageReportTable":
-        return <DamageReportTable />;
+      case "DamageReportVehicleTable":
+        return <DamageReportVehicleTable />;
+      case "DamageReportEquipmentTable":
+        return <DamageReportEquipmentTable />;
       case "LocalInspectionTable":
         return <LocalInspectionTable />;
       case "EquipmentTable":

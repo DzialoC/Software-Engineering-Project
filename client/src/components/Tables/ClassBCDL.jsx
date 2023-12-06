@@ -29,10 +29,12 @@ function ClassBCDLForm() {
   return (
     <div>
       <h1>Class B CDL Inspection Forms</h1>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Report ID</th>
+            <th>Vehicle Tag </th>
+            <th>Employee</th>
             <th>Comments</th>
             <th>Air Hydraulic Brake Check</th>
             <th>Parking Trailer Brake Check</th>
@@ -66,29 +68,41 @@ function ClassBCDLForm() {
         <tbody>
           {reports.map((report) => (
             <tr key={report.id}>
+              <td>{report.id}</td>
               <td>{report.vehicleTag}</td>
-              <td>{report.tag}</td>
-              <td>{report.vehicleInreportation}</td>
               <td>{report.userName}</td>
-              <td>{report.date}</td>
-              <td>{report.mileage}</td>
-              <td>{report.workTicket}</td>
-              <td>{report.personReleasingVehicle}</td>
-              <td>{renderBoolean(report.bodyOfVehicle)}</td>
-              <td>{renderBoolean(report.tiresConditionAndAirPressure)}</td>
-              <td>{renderBoolean(report.horn)}</td>
-              <td>{renderBoolean(report.stateInspectionAndLicSticker)}</td>
+              <td>{report.comment}</td>
+              <td>{renderBoolean(report.airHydraulicBrakeCheck)}</td>
+              <td>{renderBoolean(report.parkingTrailerBrakeCheck)}</td>
+              <td>{renderBoolean(report.serviceBrakeCheck)}</td>
+              <td>{renderBoolean(report.lightingIndicators)}</td>
+              <td>{renderBoolean(report.emergencyEquipment)}</td>
+              <td>
+                {renderBoolean(report.windshieldTrafficMonitoringDevices)}
+              </td>
+              <td>{renderBoolean(report.wipersWashers)}</td>
+              <td>{renderBoolean(report.heaterDefroster)}</td>
               <td>{renderBoolean(report.wipersReservoir)}</td>
-              <td>{renderBoolean(report.lowAndHighBeamHeadlights)}</td>
-              <td>{renderBoolean(report.brakeLights)}</td>
-              <td>{renderBoolean(report.turnSignalLights)}</td>
-              <td>{renderBoolean(report.emergencyFlasherLights)}</td>
-              <td>{renderBoolean(report.vehicleInsuranceCardValid)}</td>
-              <td>{renderBoolean(report.gasTankFull)}</td>
-              <td>{renderBoolean(report.emergencyInstructions)}</td>
-              <td>{renderBoolean(report.washVehicle)}</td>
+              <td>{renderBoolean(report.horns)}</td>
+              <td>{renderBoolean(report.allExternalLights)}</td>
+              <td>{renderBoolean(report.lensesFront)}</td>
+              <td>{renderBoolean(report.fluidLevels)}</td>
+              <td>{renderBoolean(report.fluidAirLeaks)}</td>
+              <td>{renderBoolean(report.steeringSystems)}</td>
+              <td>{renderBoolean(report.tires)}</td>
+              <td>{renderBoolean(report.rims)}</td>
+              <td>{renderBoolean(report.lugNuts)}</td>
+              <td>{renderBoolean(report.springsAirBagsShocks)}</td>
+              <td>{renderBoolean(report.brakeLinesHosesLeaks)}</td>
+              <td>{renderBoolean(report.brakeContaminates)}</td>
+              <td>{renderBoolean(report.lensesReflectorsSide)}</td>
+              <td>{renderBoolean(report.trafficMonitoringDevicesSide)}</td>
+              <td>{renderBoolean(report.battery)}</td>
+              <td>{renderBoolean(report.fuelTanks)}</td>
+              <td>{renderBoolean(report.frames)}</td>
+              <td>{renderBoolean(report.lensesReflectorsRear)}</td>
               <td>{report.comments}</td>
-              <td>{report.dpwSignature}</td>
+              <td>{report.date}</td>
             </tr>
           ))}
         </tbody>

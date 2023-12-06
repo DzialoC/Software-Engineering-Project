@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CollapsibleMenu from "./CollapsibleMenu";
+import "./Sidebar.css";
 
 const Sidebar = ({ onMenuClick }) => {
   const [sidebarMinimized, setSidebarMinimized] = useState(false);
@@ -21,7 +22,12 @@ const Sidebar = ({ onMenuClick }) => {
           <div onClick={() => onMenuClick("Vehicle")}>- New Vehicle</div>
           <div onClick={() => onMenuClick("Equipment")}>- New Equipment</div>
           <div onClick={() => onMenuClick("ClassBCDL")}>- Class B CDL</div>
-          <div onClick={() => onMenuClick("DamageReport")}>- Damage Report</div>
+          <div onClick={() => onMenuClick("VehicleDamageReport")}>
+            - Vehicle Damage Report
+          </div>
+          <div onClick={() => onMenuClick("EquipmentDamageReport")}>
+            - Equipment Damage Report
+          </div>
           <div onClick={() => onMenuClick("Maintenance")}>- Maintenance</div>
         </CollapsibleMenu>
         <CollapsibleMenu title="Overview" onMenuClick={onMenuClick}>
@@ -32,11 +38,22 @@ const Sidebar = ({ onMenuClick }) => {
           <div onClick={() => onMenuClick("EquipmentTable")}>- Equipment</div>
           <div onClick={() => onMenuClick("ClassBCDLTable")}>- Class B CDL</div>
           <div onClick={() => onMenuClick("EmployeesTable")}>- Employees</div>
-          <div onClick={() => onMenuClick("DamageReportTable")}>
-            - Damage Reports
+          <div onClick={() => onMenuClick("DamageReportVehicleTable")}>
+            - Damage Report Vehicles
+          </div>
+          <div onClick={() => onMenuClick("DamageReportEquipmentTable")}>
+            - Damage Report Equipment
           </div>
           <div onClick={() => onMenuClick("MaintenanceReportTable")}>
             - Maintenance
+          </div>
+        </CollapsibleMenu>
+        <CollapsibleMenu title="Outlook" onMenuClick={onMenuClick}>
+          <div onClick={() => onMenuClick("MaintenanceCalendar")}>
+            - Calender
+          </div>
+          <div onClick={() => onMenuClick("GenerateReport")}>
+            - Generate Report
           </div>
         </CollapsibleMenu>
       </div>

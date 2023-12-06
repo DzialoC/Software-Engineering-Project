@@ -18,6 +18,9 @@ const Equipment = db.define("Equipment", {
     type: DataTypes.STRING(16),
     allowNull: false,
   },
+  underMaintenance: {
+    type: DataTypes.BOOLEAN,
+  },
 });
 
 (async () => {

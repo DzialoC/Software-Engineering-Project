@@ -10,6 +10,8 @@ const MaintenanceForm = () => {
     equipmentID: "",
     cost: "",
     partsReplaced: "",
+    nextMaintenanceDate: "",
+    nextMaintenanceWork: "",
   });
 
   // Handle form input changes
@@ -59,7 +61,6 @@ const MaintenanceForm = () => {
             required
           />
         </div>
-
         <div>
           <label htmlFor="maintenanceDate">Maintenance Date:</label>
           <input
@@ -71,7 +72,17 @@ const MaintenanceForm = () => {
             required
           />
         </div>
-
+        <div>
+          <label htmlFor="nextMaintenanceDate">Next Maintenance Date:</label>
+          <input
+            type="date"
+            id="nextMaintenanceDate"
+            name="nextMaintenanceDate"
+            value={formData.nextMaintenanceDate}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
         <div>
           <label htmlFor="vehicleTag">Vehicle Tag:</label>
           <input
@@ -82,7 +93,6 @@ const MaintenanceForm = () => {
             onChange={handleInputChange}
           />
         </div>
-
         <div>
           <label htmlFor="equipmentID">Equipment ID:</label>
           <input
@@ -93,7 +103,6 @@ const MaintenanceForm = () => {
             onChange={handleInputChange}
           />
         </div>
-
         <div>
           <label htmlFor="cost">Cost:</label>
           <input
@@ -104,7 +113,6 @@ const MaintenanceForm = () => {
             onChange={handleInputChange}
           />
         </div>
-
         <div>
           <label htmlFor="partsReplaced">Parts Replaced:</label>
           <input
@@ -116,7 +124,19 @@ const MaintenanceForm = () => {
             required
           />
         </div>
-
+        <div>
+          <label htmlFor="nextMaintenanceWork">
+            Next maintenance work to be completed:
+          </label>
+          <input
+            type="text"
+            id="nextMaintenanceWork"
+            name="nextMaintenanceWork"
+            value={formData.nextMaintenanceWork}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
         <button className="button" type="submit">
           Submit
         </button>

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Equipment() {
-  const [equipmentData, setEquipmentData] = useState([]);
-  const [selectedEquipment, setSelectedEquipment] = useState([]);
+  let [equipmentData, setEquipmentData] = useState([]);
+  let [selectedEquipment, setSelectedEquipment] = useState([]);
 
   useEffect(() => {
     async function fetchEquipmentData() {
@@ -11,11 +11,7 @@ function Equipment() {
         const response = await axios.get("http://localhost:5000/equipment/", {
           withCredentials: true,
         });
-        const dataWithUniqueId = response.data.map((item, index) => ({
-          ...item,
-          uniqueKey: `equipment-${index}-${item.equipmentID}`,
-        }));
-        setEquipmentData(dataWithUniqueId);
+        setEquipmentData(response.data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -50,19 +46,18 @@ function Equipment() {
       alert("Please select at least one equipment to Modify.");
       return;
     }
-
     try {
       for (const equipmentId of selectedEquipment) {
         let equipmentToUpdate = equipmentData.find(
           (equipment) => equipment.equipmentID === equipmentId
         );
-        delete equipmentToUpdate.uniqueKey;
         await axios.put(
           `http://localhost:5000/equipment/update/${equipmentId}`,
           equipmentToUpdate,
           { withCredentials: true }
         );
       }
+      setSelectedEquipment([]);
       alert("Selected equipment updated successfully.");
     } catch (error) {
       console.error("Update error:", error);
@@ -91,19 +86,20 @@ function Equipment() {
   return (
     <div>
       <h2>Equipment List</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Select</th>
             <th>Equipment ID</th>
             <th>Equipment Condition</th>
             <th>Equipment Description</th>
+            <th>Under Ma</th>
             <th>Entry Date</th>
           </tr>
         </thead>
         <tbody>
           {equipmentData.map((equipment) => (
-            <tr key={equipment.uniqueKey}>
+            <tr key={equipment.equipmentID}>
               <td>
                 <input
                   type="checkbox"
@@ -112,7 +108,7 @@ function Equipment() {
                 />
               </td>
               <td>
-                <input type="text" readonly value={equipment.equipmentID} />
+                <input type="text" readOnly value={equipment.equipmentID} />
               </td>
               <td>
                 <input
@@ -136,6 +132,19 @@ function Equipment() {
                       equipment.equipmentID,
                       "equipmentDescription",
                       e.target.value
+                    )
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={equipment.underMaintenance}
+                  onChange={(e) =>
+                    handleFieldChange(
+                      equipment.equipmentID,
+                      "underMaintenance",
+                      e.target.checked
                     )
                   }
                 />

@@ -1,24 +1,44 @@
 import DamageReportService from "../services/damageReport.service.js";
+import util from "../utils/util.js";
 
 const DamageReportController = {
-  async createDamageReport(req, res) {
+  async createVehicleDamageReport(req, res) {
     try {
       const damageData = req.body;
-      const vehicleDamaged = damageData.vehicleID;
-      const equipmentDamaged = damageData.equipmentID;
-      if (vehicleDamaged && equipmentDamaged) {
-        throw error.message(
-          "Cannot insert vehicle and equipment. Only one area can be filled."
-        );
-      }
-      if (vehicleDamaged === true) {
-        DamageReportService.createVehicleDamageReport(damageData);
-      }
-
-      if (equipmentDamaged === true) {
-        DamageReportService.createEquipmentDamageReport(damageData);
-      }
+      await DamageReportService.createVehicleDamageReport(damageData);
       res.status(201).json("Submittion Sucess!");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async createEquipmentDamageReport(req, res) {
+    try {
+      const damageData = req.body;
+      const submission = await DamageReportService.createEquipmentDamageReport(
+        damageData
+      );
+      if (submission) {
+        res.status(201).json("Submittion Sucess!");
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getVehicleDamageReports(req, res) {
+    try {
+      const reports = await DamageReportService.getVehicleReports();
+      res.status(200).json(reports);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getEquipmentDamageReports(req, res) {
+    try {
+      const reports = await DamageReportService.getEquipmentReports();
+      res.status(200).json(reports);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -68,6 +88,100 @@ const DamageReportController = {
       const recentLogs =
         await DamageReportService.getRecentSpecifiedDamageReports(amount);
       res.status(200).json(recentLogs);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getVehicleCSV(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await DamageReportService.getVehicleCSV(
+        formattedStartDate,
+        formattedEndDate
+      );
+      res.setHeader("Content-Type", "application/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=vehicle_report.csv"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getVehiclePDF(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await DamageReportService.getVehiclePDF(
+        formattedStartDate,
+        formattedEndDate
+      );
+      // Set the response headers to indicate that you're sending a PDF file
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=vehicle_report.pdf"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getEquipmentCSV(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await DamageReportService.getEquipmentCSV(
+        formattedStartDate,
+        formattedEndDate
+      );
+      res.setHeader("Content-Type", "application/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=vehicle_report.csv"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getEquipmentPDF(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await DamageReportService.getEquipmentPDF(
+        formattedStartDate,
+        formattedEndDate
+      );
+      // Set the response headers to indicate that you're sending a PDF file
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=vehicle_report.pdf"
+      );
+      res.status(200).send(generatedReport);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

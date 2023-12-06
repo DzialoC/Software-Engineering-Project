@@ -131,9 +131,7 @@ const UserService = {
   async getUserNameFromIdAppendForms(inputForms) {
     const formsWithName = await Promise.all(
       inputForms.map(async (form) => {
-        console.log("Form pass", form);
         const userInfo = await this.getUserNameFromId(form.userID);
-        console.log("userInfo ", userInfo);
         return {
           ...form,
           userName: userInfo,
@@ -177,7 +175,7 @@ const UserService = {
 
       return accessToken;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
 
@@ -208,13 +206,11 @@ const UserService = {
 
   async isAdmin(id) {
     try {
-      const admin = await Users.findByPk(id);
-      if (admin.admin) {
+      const user = await Users.findByPk(id);
+      if (user.admin === true) {
         return true;
       } else {
-        const error = new Error("Forbidden: Not Admin");
-        error.status = 403;
-        throw error;
+        return false;
       }
     } catch (error) {
       throw error;
@@ -250,8 +246,17 @@ const UserService = {
     }
   },
 
-  async getUserByEmail(email) {
-    Users.findOne();
+  async updateUser(updatedUser) {
+    try {
+      const updateInfo = await Users.update(updatedUser, {
+        where: { id: updatedUser.id },
+      });
+      if (updateInfo) {
+        return true;
+      }
+    } catch (error) {
+      throw error;
+    }
   },
 };
 

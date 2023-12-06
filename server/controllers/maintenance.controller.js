@@ -56,20 +56,24 @@ const MaintenanceController = {
       const pageNumber = parseInt(req.params.page);
       const maintenanceEquipmentLogs =
         await MaintenanceService.getMaintenanceEquipmentByPage(pageNumber);
-      console.log(maintenanceEquipmentLogs);
       const maintenanceVehicleByPage =
         await MaintenanceService.getMaintenanceVehicleByPage(pageNumber);
-      console.log(maintenanceEquipmentLogs);
-      console.log(maintenanceVehicleByPage);
       const combinedRecord = [
         ...maintenanceEquipmentLogs,
         ...maintenanceVehicleByPage,
       ];
-
-      console.log(combinedRecord, "Combined");
       res.status(200).json(combinedRecord);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getNinetyDaysOutMaintenance(req, res) {
+    try {
+      const nextThirty = await MaintenanceService.getNinetyDaysOutMaintenance();
+      res.status(200).json(nextThirty);
+    } catch (error) {
+      throw error;
     }
   },
 
@@ -80,6 +84,42 @@ const MaintenanceController = {
         amount
       );
       res.status(200).json(recentLogs);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getCSVFromSpecifiedDate(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const generatedReport = await MaintenanceService.getCSVFromSpecifiedDate(
+        startDate,
+        endDate
+      );
+      res.setHeader("Content-Type", "application/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=upcoming_maintenance_report.csv"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getPDFFromSpecifiedDate(req, res) {
+    try {
+      console.log("it works");
+      const generatedReport =
+        await MaintenanceService.getPDFFromSpecifiedDate();
+      // Set the response headers to indicate that you're sending a PDF file
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=upcoming_maintenance_report.pdf"
+      );
+      res.status(200).send(generatedReport);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -68,7 +68,7 @@ function LocalInspectionReports() {
   return (
     <div>
       <h1>Latest Reports</h1>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Select</th>

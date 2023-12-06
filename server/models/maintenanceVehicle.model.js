@@ -45,6 +45,13 @@ const MaintenanceVehicle = db.define("MaintenanceVehicle", {
   partsReplaced: {
     type: DataTypes.STRING,
   },
+  nextMaintenanceDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  nextMaintenanceWork: {
+    type: DataTypes.STRING,
+  },
 });
 
 (async () => {

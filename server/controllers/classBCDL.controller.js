@@ -18,7 +18,8 @@ const ClassBCDLController = {
 
   async getAllClassBCDL(req, res) {
     try {
-      const forms = ClassBCDLService.getAllClassBCDL();
+      const forms = await ClassBCDLService.getAllClassBCDL();
+      console.log(forms);
       return res.status(200).json(forms);
     } catch (error) {
       console.error("Error fetching CDL forms:", error);
@@ -59,6 +60,53 @@ const ClassBCDLController = {
         await ClassBCDLService.getRecentSpecifiedClassBForms(amount);
 
       res.status(200).json(recentClassBCDLForms);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getCSVFromSpecifiedDate(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await ClassBCDLService.getCSVFromSpecifiedDate(
+        formattedStartDate,
+        formattedEndDate
+      );
+      res.setHeader("Content-Type", "application/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=classbcdl_report.csv"
+      );
+      res.status(200).send(generatedReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async getPDFFromSpecifiedDate(req, res) {
+    try {
+      const startDate = req.query.startDate;
+      const endDate = req.query.endDate;
+      const { formattedStartDate, formattedEndDate } = util.reformatDate(
+        startDate,
+        endDate
+      );
+      const generatedReport = await ClassBCDLService.getPDFFromSpecifiedDate(
+        formattedStartDate,
+        formattedEndDate
+      );
+      // Set the response headers to indicate that you're sending a PDF file
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "inline; filename=classbcdl_report.pdf"
+      );
+      res.status(200).send(generatedReport);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

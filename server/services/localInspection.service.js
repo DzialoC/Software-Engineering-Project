@@ -44,11 +44,9 @@ const LocalInspectionService = {
       order: [["createdAt", "DESC"]],
       limit: amount,
     });
-    console.log(recentInspections);
     const logsWithAppendedVehicleInfo = await VechicleService.getVehicleInfo(
       recentInspections
     );
-    console.log(logsWithAppendedVehicleInfo, "appended");
     const logsWithAppendedName = await UserService.getUserNameFromIdAppendForms(
       logsWithAppendedVehicleInfo
     );

@@ -9,13 +9,13 @@ const VehicleForm = () => {
     vehicleMake: "",
     vehicleModel: "",
     vehicleYear: "",
+    underMaintenance: false,
   });
 
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
   };
 
   // Handle form submission
@@ -101,7 +101,16 @@ const VehicleForm = () => {
             required
           />
         </div>
-
+        <div>
+          <label htmlFor="underMaintenance">Under Maintenance:</label>
+          <input
+            type="checkbox"
+            id="underMaintenance"
+            name="underMaintenance"
+            value={formData.underMaintenance}
+            onChange={handleInputChange}
+          />
+        </div>
         <button className="button" type="submit">
           Submit
         </button>
